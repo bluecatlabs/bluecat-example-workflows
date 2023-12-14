@@ -1,0 +1,14 @@
+{
+    "add_text_record_v2": {
+        "add_text_record_page": [
+            "admin",
+            "all"
+        ]
+    },
+    "get_object_details": {
+        "get_object_details": [
+            "admin",
+            "all"
+        ]
+    }
+}

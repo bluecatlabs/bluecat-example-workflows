@@ -1,0 +1,12 @@
+# Copyright 2023 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved.
+arrowParens: always
+bracketSameLine: true
+bracketSpacing: true
+printWidth: 100
+quoteProps: preserve
+semi: true
+singleQuote: true
+jsxSingleQuote: true
+tabWidth: 4
+trailingComma: all
+useTabs: false

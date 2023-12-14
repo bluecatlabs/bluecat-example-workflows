@@ -1,0 +1,9 @@
+{
+    "pages": [
+        {
+            "title": "add_text_record_page",
+            "url": "/add_text_record_v2",
+            "permission": "add_text_record_v2"
+        }
+    ]
+}
