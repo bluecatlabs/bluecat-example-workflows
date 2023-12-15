@@ -4,11 +4,5 @@
             "admin",
             "all"
         ]
-    },
-    "get_object_details": {
-        "get_object_details": [
-            "admin",
-            "all"
-        ]
     }
 }

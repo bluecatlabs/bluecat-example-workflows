@@ -18,12 +18,4 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # pylint: disable=redefined-builtin,missing-docstring
-type = "ui"
-sub_pages = [
-    {
-        "name": "add_text_record_page",
-        "title": "Add text record",
-        "endpoint": "/add_text_record_v2/",
-        "description": "Add text record using BAM REST API v2 via new UI",
-    },
-]
+

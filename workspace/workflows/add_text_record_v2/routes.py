@@ -22,11 +22,15 @@ import os
 
 from flask import g, request, send_from_directory
 
-from bluecat import route
-from bluecat.gateway.decorators import api_exc_handler, require_permission, page_exc_handler
+from bluecat.gateway.decorators import (
+    api_exc_handler,
+    page_exc_handler,
+    require_permission,
+)
 from bluecat.gateway.errors import BadRequestError, FieldError
 from bluecat.util import no_cache
-from main_app import app
+
+from .base import bp
 
 
 def validate_form(zone_id, zone_name):
@@ -49,7 +53,7 @@ def validate_form(zone_id, zone_name):
         )
 
 
-@route(app, "/")
+@bp.route("/")
 @page_exc_handler(default_message='Failed to load page "Add text record".')
 @require_permission("add_text_record_page")
 def page():
@@ -63,7 +67,7 @@ def page():
     )
 
 
-@route(app, "/configurations")
+@bp.route("/configurations")
 @api_exc_handler(default_message="Failed to get configurations available on BAM.")
 @require_permission("add_text_record_page")
 def api_get_configurations():
@@ -71,13 +75,14 @@ def api_get_configurations():
     Get configurations for the dropDown in the Add Text Record page
     """
     rdata = g.user.bam_api.v2.http_get(
-        "/configurations", params={"fields": "id,name", "orderBy": "desc(name)", "limit": "9999"}
+        "/configurations",
+        params={"fields": "id,name", "orderBy": "desc(name)", "limit": "9999"},
     )
     configurations = rdata["data"]
     return {"configurations": configurations}
 
 
-@route(app, "/views", methods=["POST"])
+@bp.route("/views", methods=["POST"])
 @api_exc_handler(default_message="Failed to get views available on BAM.")
 @require_permission("add_text_record_page")
 def api_get_views():
@@ -94,7 +99,7 @@ def api_get_views():
     return {"views": views}
 
 
-@route(app, "/zones", methods=["POST"])
+@bp.route("/zones", methods=["POST"])
 @api_exc_handler(default_message="Failed to get zones available on BAM.")
 @require_permission("add_text_record_page")
 def api_get_zones():
@@ -115,7 +120,7 @@ def api_get_zones():
     return {"zones": zones}
 
 
-@route(app, "/", methods=["POST"])
+@bp.route("/", methods=["POST"])
 @no_cache
 @api_exc_handler(default_message="Failed to add text record.")
 @require_permission("add_text_record_page")

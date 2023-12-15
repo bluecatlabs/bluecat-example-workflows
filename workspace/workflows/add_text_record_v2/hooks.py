@@ -25,7 +25,7 @@ def initialize():
     """Handle the `initialize` event."""
     # NOTE: Load the modules that add routes to the blueprint instance.
     # pylint: disable=unused-import
-    from . import add_text_record_page
+    from . import routes
 
 
 def attach(application):
