@@ -1,4 +1,3 @@
-@@ -0,0 +1,59 @@
 # Copyright 2023 BlueCat Networks Inc.
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,19 +22,19 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 parentdir := $(shell dirname $(mkfile_path))
 
 ui-req:
-	cd $(parentdir)/add_text_record_v2_ui && npm install
+	cd $(parentdir)/add_text_record_ui && npm install
 
 ui-build:
-	cd $(parentdir)/add_text_record_v2_ui \
-		&& export NODE_ENV=production \
-		&& npm run build
+	cd $(parentdir)/add_text_record_ui \
+	&& export NODE_ENV=production \
+	&& npm run build
 
 clean:
 	rm -rf \
-		$(parentdir)/../../workspace/workflows/add_text_record_v2/fonts \
-		$(parentdir)/../../workspace/workflows/add_text_record_v2/html \
-		$(parentdir)/../../workspace/workflows/add_text_record_v2/img \
-		$(parentdir)/../../workspace/workflows/add_text_record_v2/js
+		$(parentdir)/../../workspace/workflows/add_text_record/fonts \
+		$(parentdir)/../../workspace/workflows/add_text_record/html \
+		$(parentdir)/../../workspace/workflows/add_text_record/img \
+		$(parentdir)/../../workspace/workflows/add_text_record/js
 
 purge: clean
-	rm -rf $(parentdir)/add_text_record_v2_ui/node_modules
+	rm -rf $(parentdir)/add_text_record_ui/node_modules
