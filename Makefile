@@ -42,10 +42,10 @@ stop:
 	docker stop example-workflows
 
 ui-req:
-	make -f projects/add_text_record_v2/Makefile ui-req
+	make -f projects/add_text_record/Makefile ui-req
 
 ui-build:
-	make -f projects/add_text_record_v2/Makefile ui-build
+	make -f projects/add_text_record/Makefile ui-build
 
 image-build:
 	docker build --tag quay.io/bluecat/gateway_example_workflows_ci:23.2.0 .
@@ -53,7 +53,7 @@ image-build:
 build: ui-build image-build
 
 clean:
-	make -f projects/add_text_record_v2/Makefile clean
+	make -f projects/add_text_record/Makefile clean
 
 purge:
-	make -f projects/add_text_record_v2/Makefile purge
+	make -f projects/add_text_record/Makefile purge

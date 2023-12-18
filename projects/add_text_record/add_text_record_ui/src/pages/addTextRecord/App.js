@@ -56,7 +56,7 @@ const Content = () => {
 
     useEffect(() => {
         document.title = 'BlueCat Gateway - Add text record';
-        doGet('/add_text_record_v2/configurations')
+        doGet('/add_text_record/configurations')
             .then((data) => {
                 setInitialFormData({
                     configurations: data.configurations,
@@ -89,7 +89,7 @@ const Content = () => {
         payload.append('name', values.name);
         payload.append('text', values.text);
 
-        doPost('/add_text_record_v2', payload)
+        doPost('/add_text_record', payload)
             .then((data) => {
                 addSuccessMessage(data.message);
                 toggleTriggerLoad();

@@ -31,9 +31,9 @@ module.exports = [
         output: {
             path: path.join(
                 __dirname,
-                '../../../workspace/workflows/add_text_record_v2/',
+                '../../../workspace/workflows/add_text_record/',
             ),
-            publicPath: '/add_text_record_v2/',
+            publicPath: '/add_text_record/',
             filename: 'js/[name].js',
             assetModuleFilename: 'img/[name][ext]',
         },

@@ -25,10 +25,6 @@ SOFTWARE.
 This is a workflow that demonstrates current features of Gateway Platform, e.g.,
 having the UI built with Pelagos and Limani, using BAM REST API v2.
 
-There is a previous, not outdated, instance of an example workflow for adding a
-text record. To avoid confusion and conflicts, the new workflow has a different
-name - `add_text_record_v2`.
-
 Gateway workflows are written in Python, whose interpreted nature allows for
 the folder with their Python source code to de directly distributable (included
 in a Gateway workspace).
@@ -36,9 +32,9 @@ Because the new UI uses technologies that require a build step, the sources of
 the workflow are grouped in two separate places:
 
 1. Code for the back-end implementation that extends the web application,
-   located in `workspace/workflows/add_text_record_v2`;
+   located in `workspace/workflows/add_text_record`;
 2. Code for the front-end implementation, as well as general resources, placed
-   in `sources/add_text_record_v2` (the folder that contains this README file).
+   in `projects/add_text_record` (the folder that contains this README file).
 
 Several `make` targets are provided for performing actions specific to this
 workflow. They are available through the adjacent `Makefile`.
@@ -74,7 +70,7 @@ instance.
    a. using a custom image
    b. using a base Gateway image
 7. Open the started Gateway in a browser, login, and then navigate to
-   `/add_text_record_v2/` or click on link `Add text record` in the navigation
+   `/add_text_record/` or click on link `Add text record` in the navigation
    menu.
 
 ## Steps taken to create this workflow

@@ -55,7 +55,7 @@ def validate_form(zone_id, zone_name):
 
 @bp.route("/")
 @page_exc_handler(default_message='Failed to load page "Add text record".')
-@require_permission("add_text_record_v2")
+@require_permission("add_text_record")
 def page():
     """
     Render page "Add text record".
@@ -69,7 +69,7 @@ def page():
 
 @bp.route("/configurations")
 @api_exc_handler(default_message="Failed to get configurations available on BAM.")
-@require_permission("add_text_record_v2")
+@require_permission("add_text_record")
 def api_get_configurations():
     """
     Get configurations for the dropDown in the Add Text Record page
@@ -84,7 +84,7 @@ def api_get_configurations():
 
 @bp.route("/views", methods=["POST"])
 @api_exc_handler(default_message="Failed to get views available on BAM.")
-@require_permission("add_text_record_v2")
+@require_permission("add_text_record")
 def api_get_views():
     """
     Get views under the selected configuration in the Add Text Record page
@@ -101,7 +101,7 @@ def api_get_views():
 
 @bp.route("/zones", methods=["POST"])
 @api_exc_handler(default_message="Failed to get zones available on BAM.")
-@require_permission("add_text_record_v2")
+@require_permission("add_text_record")
 def api_get_zones():
     """
     Get zones under the selected view in the Add Text Record page
@@ -123,7 +123,7 @@ def api_get_zones():
 @bp.route("/", methods=["POST"])
 @no_cache
 @api_exc_handler(default_message="Failed to add text record.")
-@require_permission("add_text_record_v2")
+@require_permission("add_text_record")
 def api_post_add_text_record():
     """
     Add a text record based on the provided parameters.

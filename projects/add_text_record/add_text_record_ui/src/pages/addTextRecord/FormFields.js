@@ -76,7 +76,7 @@ export const FormFields = ({ initialFormData }) => {
                 })?.id ?? '';
             const payload = new FormData();
             payload.append('configuration', configurationID);
-            doPost('/add_text_record_v2/views', payload).then((data) => {
+            doPost('/add_text_record/views', payload).then((data) => {
                 setViews(data.views.length === 0 ? [] : data.views);
             });
         } else {
@@ -95,7 +95,7 @@ export const FormFields = ({ initialFormData }) => {
             const payload = new FormData();
             payload.append('view', viewID);
 
-            doPost('/add_text_record_v2/zones', payload).then((data) => {
+            doPost('/add_text_record/zones', payload).then((data) => {
                 setZones(data.zones.length === 0 ? [] : data.zones);
             });
         } else {
