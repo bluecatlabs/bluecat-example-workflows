@@ -18,10 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# NOTE: The following should be updated after a GA build of GW 23.2.0.
-FROM quay.io/bluecat/gateway_ci:23.2.0
-
-MAINTAINER BlueCat Engineering
+FROM quay.io/bluecat/gateway:23.2.2
 
 # Set expiration on Quay
 ARG expires_after="never"

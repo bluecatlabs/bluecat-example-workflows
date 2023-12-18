@@ -36,7 +36,7 @@ run: run-prep
 		-v "$(BASE_DIR)/logs":/logs \
 	 	-u "$(shell id -u)" \
 		--name example-workflows \
-		quay.io/bluecat/gateway:23.2.0
+		quay.io/bluecat/gateway:23.2.2
 
 stop:
 	docker stop example-workflows
