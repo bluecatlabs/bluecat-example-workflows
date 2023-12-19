@@ -29,10 +29,7 @@ module.exports = [
             addTextRecord: './src/pages/addTextRecord/index.js',
         },
         output: {
-            path: path.join(
-                __dirname,
-                '../../../workspace/workflows/add_text_record/',
-            ),
+            path: path.join(__dirname, '../../../workspace/workflows/add_text_record/'),
             publicPath: '/add_text_record/',
             filename: 'js/[name].js',
             assetModuleFilename: 'img/[name][ext]',
