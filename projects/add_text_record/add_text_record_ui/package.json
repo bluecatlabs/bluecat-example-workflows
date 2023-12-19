@@ -12,7 +12,7 @@
         "reformat": "prettier --write --config ./.prettierrc . --ignore-path ./.prettierignore"
     },
     "author": "",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "dependencies": {
         "@bluecat/limani": "^1.1.6-dev",
         "@bluecateng/auto-forms": "^1.0.0",

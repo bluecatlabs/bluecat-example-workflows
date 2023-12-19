@@ -17,7 +17,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Routes and back-end implementation of page "Add text record"."""
+"""Routes and back-end implementation of workflow ``add_text_record``."""
 import os
 
 from flask import g, request, send_from_directory

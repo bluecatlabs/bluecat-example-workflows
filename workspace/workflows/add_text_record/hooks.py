@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Event handlers of workflow `test_workflow`."""
+"""Event handlers of workflow ``add_text_record``."""
 
 
 def initialize():

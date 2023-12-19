@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Base items of workflow `test_workflow`."""
+"""Base items of workflow ``add_text_record``."""
 from flask import Blueprint
 
 bp = Blueprint("add_text_record", __name__, url_prefix="/add_text_record")
