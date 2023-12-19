@@ -11,4 +11,3 @@ workspace/workflows/*/js/
 .prettierrc
 package.json
 package-lock.json
-.gitlab-ci.yml
