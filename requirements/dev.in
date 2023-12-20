@@ -1,0 +1,4 @@
+-r lint.txt
+
+tox==4.11.3
+Flask==2.3.2
