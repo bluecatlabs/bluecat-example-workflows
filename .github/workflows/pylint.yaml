@@ -22,4 +22,6 @@ jobs:
                   node-version: 18
 
             - name: Run Pylint analysis
-              run: tox -e pylint
+              run: |
+                pip3 install -r requirements/dev.txt
+                tox -e pylint
