@@ -36,9 +36,7 @@ module.exports = {
         'ecmaVersion': 12,
         'sourceType': 'module',
     },
-    'ignorePatterns': [
-        'workspace/workflows/*/js/',
-    ],
+    'ignorePatterns': ['workspace/workflows/*/js/'],
     'root': true,
     'rules': {
         // enable additional rules
