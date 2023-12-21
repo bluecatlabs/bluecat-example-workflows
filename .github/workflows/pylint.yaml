@@ -23,5 +23,7 @@ jobs:
 
             - name: Run Pylint analysis
               run: |
-                pip3 install -r requirements/dev.txt
+                python3.9 -m venv .venv
+                source .venv/bin/activate
+                pip3 install --require-hashes --no-deps -r requirements/dev-base.txt
                 tox -e pylint
