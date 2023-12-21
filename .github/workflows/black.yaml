@@ -1,5 +1,5 @@
-name: Pylint
-run-name: ${{ github.actor }} is running Pylint check on code
+name: Black
+run-name: ${{ github.actor }} is running Black check on code
 on:
     push:
         branches: ['*']
@@ -10,7 +10,7 @@ on:
 permissions: read-all
 jobs:
     test:
-        name: Running Pylint
+        name: Running Black
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -27,7 +27,7 @@ jobs:
                   source .venv/bin/activate
                   pip3 install --require-hashes -r requirements/dev-base.txt
 
-            - name: Run Pylint analysis
+            - name: Run Black analysis
               run: |
                   source .venv/bin/activate
-                  tox -e pylint
+                  tox -e black
