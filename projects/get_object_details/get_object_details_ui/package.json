@@ -13,13 +13,13 @@
         "prettier-check": "prettier --check --config ./.prettierrc . --ignore-path ./.prettierignore"
     },
     "author": "",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "dependencies": {
-        "@bluecat/limani": "^1.0.0",
+        "@bluecat/limani": "^1.1.6-dev",
         "@bluecateng/auto-forms": "^1.0.0",
         "@bluecateng/l10n-core": "^0.2.0",
-        "@bluecateng/pelagos": "^10.3.0",
-        "@bluecateng/pelagos-forms": "^4.1.0",
+        "@bluecateng/pelagos": "^12.4.0",
+        "@bluecateng/pelagos-forms": "^5.0.0",
         "@bluecateng/smooth-reorder": "^1.0.1",
         "@fortawesome/free-regular-svg-icons": "^6.2.0",
         "@fortawesome/free-solid-svg-icons": "^6.2.0",
