@@ -29,7 +29,10 @@ module.exports = [
             getObjectDetails: './src/pages/getObjectDetails/index.js',
         },
         output: {
-            path: path.join(__dirname, '../../../workspace/workflows/get_object_details/'),
+            path: path.join(
+                __dirname,
+                '../../../workspace/workflows/get_object_details/',
+            ),
             publicPath: '/get_object_details/',
             filename: 'js/[name].js',
             assetModuleFilename: 'img/[name][ext]',

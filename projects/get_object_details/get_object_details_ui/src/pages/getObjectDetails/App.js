@@ -30,7 +30,13 @@ import {
     usePageMessages,
     usePageModalSpinner,
 } from '@bluecat/limani';
-import { TextInputField, Button, DetailEntry, DetailsGrid, LabelLine } from '@bluecateng/pelagos';
+import {
+    TextInputField,
+    Button,
+    DetailEntry,
+    DetailsGrid,
+    LabelLine,
+} from '@bluecateng/pelagos';
 import { t } from '@bluecateng/l10n.macro';
 import setLanguage from '../../functions/setLanguage';
 import './App.less';
@@ -48,7 +54,9 @@ const Content = () => {
         doGet('/get_object_details/object?objectId=' + objectId)
             .then((data) => {
                 if (!data.data) {
-                    addInfoMessage(t`The object does not exist for the given ID.`);
+                    addInfoMessage(
+                        t`The object does not exist for the given ID.`,
+                    );
                 }
                 setData(data.data);
             })
@@ -93,7 +101,9 @@ const Content = () => {
         <PageBody>
             <PageContent pageTitle={t`Get object name example`}>
                 <div className='Content'>
-                    <LabelLine text={t`Workflow to get name and type for the given object ID.`} />
+                    <LabelLine
+                        text={t`Workflow to get name and type for the given object ID.`}
+                    />
                     <DetailsGrid className='Content__mainGrid'>
                         <TextInputField
                             id='objectId'
