@@ -17,3 +17,29 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+parentdir := $(shell dirname $(mkfile_path))
+
+ui-req:
+	cd $(parentdir)/update_text_record_ui && npm install
+	#cd $(parentdir) && npm install
+
+#ui-build:
+	#cd $(parentdir)/manage_text_record_ui/update_text_record_ui \
+	#cd $(parentdir)/update_text_record_ui \
+
+ui-build:
+	cd $(parentdir)/update_text_record_ui \
+	&& export NODE_ENV=production \
+	&& npm run build
+
+clean:
+	rm -rf \
+		$(parentdir)/../../workspace/workflows/Manage text record/update_text_record/fonts \
+		$(parentdir)/../../workspace/workflows/Manage text record/update_text_record/html \
+		$(parentdir)/../../workspace/workflows/Manage text record/update_text_record/img \
+		$(parentdir)/../../workspace/workflows/Manage text record/update_text_record/js
+
+purge: clean
+	rm -rf $(parentdir)/update_text_record_ui/node_modules
