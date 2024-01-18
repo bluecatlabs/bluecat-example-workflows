@@ -78,7 +78,7 @@ const Content = () => {
             });
     }, [triggerLoad]);
 
-    const handleSubmit = (values, {}) => {
+    const handleSubmit = (values) => {
         if (values['recordName'] && values['recordText']) {
             const payload = new FormData();
             const data = {

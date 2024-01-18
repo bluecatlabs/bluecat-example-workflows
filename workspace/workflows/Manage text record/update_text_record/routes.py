@@ -20,11 +20,13 @@
 """Routes and back-end implementation of workflow "update_text_record"."""
 import os
 
+# pylint: disable=import-error
 from bluecat.gateway.decorators import (
     api_exc_handler,
     page_exc_handler,
     require_permission,
 )
+# pylint: disable=import-error
 from bluecat.util import no_cache
 
 from .base import bp

@@ -64,12 +64,10 @@ export const FormFields = ({ initialFormData }) => {
     const {
         value: selectedRecord,
         setValue: setSelectedRecord,
-        error: selectedRecordError,
-        setError: setSelectedRecordError,
     } = useFormField('record');
-    const { value: selectedRecordName, setValue: setSelectedRecordName } =
+    const { setValue: setSelectedRecordName } =
         useFormField('recordName');
-    const { value: selectedRecordText, setValue: setSelectedRecordText } =
+    const { setValue: setSelectedRecordText } =
         useFormField('recordText');
 
     const [views, setViews] = useState([]);
