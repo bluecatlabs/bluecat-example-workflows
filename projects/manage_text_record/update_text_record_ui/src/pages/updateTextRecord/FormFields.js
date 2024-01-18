@@ -21,17 +21,19 @@ SOFTWARE.
 */
 
 import { useCallback, useEffect, useState } from 'react';
-import { Button,
-        Table,
-        TableBody,
-        TableCell,
-        TableHead,
-        TableHeader,
-        TableRow,
-        TableScrollWrapper,
-        TableToolbar,
-        TableToolbarDefault
-        } from "@bluecateng/pelagos";
+import {
+    DetailsGrid,
+    LabelLine, Layer,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    TableScrollWrapper,
+    TableToolbar,
+    TableToolbarDefault,
+    TableToolbarSearch
+} from "@bluecateng/pelagos";
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FormTextInput } from '@bluecateng/pelagos-forms';
 import { useFormField } from '@bluecateng/auto-forms';
@@ -59,11 +61,28 @@ export const FormFields = ({ initialFormData }) => {
         error: selectedZoneError,
         setError: setSelectedZoneError,
     } = useFormField('zone');
-
-    const placeholder = () => ('agga');
+    const {
+        value: selectedRecord,
+        setValue: setSelectedRecord,
+        error: selectedRecordError,
+        setError: setSelectedRecordError,
+    } = useFormField('record');
+    const {
+        value: selectedRecordName,
+        setValue: setSelectedRecordName,
+    } = useFormField("recordName");
+    const {
+        value: selectedRecordText,
+        setValue: setSelectedRecordText,
+    } = useFormField('recordText');
 
     const [views, setViews] = useState([]);
     const [zones, setZones] = useState([]);
+    const [records, setRecords] = useState([]);
+    const [filteredRecords, setFilteredRecords] = useState([]);
+
+    // filterText is used by the search bar on top of the table
+    const [filterText, setFilterText] = useState('');
 
     const checkAllFieldsHasValue = useCallback(() => {
         return !(selectedConfiguration && selectedView && selectedZone);
@@ -82,6 +101,7 @@ export const FormFields = ({ initialFormData }) => {
         }
     }, [selectedConfiguration, selectedView, selectedZone]);
 
+
     useEffect(() => {
         if (selectedConfiguration) {
             setSelectedView('');
@@ -91,18 +111,20 @@ export const FormFields = ({ initialFormData }) => {
                 })?.id ?? '';
             const payload = new FormData();
             payload.append('configuration', configurationID);
-            doPost('/add_text_record/views', payload).then((data) => {
+            doPost('/update_text_record/views', payload).then((data) => {
                 setViews(data.views.length === 0 ? [] : data.views);
             });
         } else {
             setSelectedView('');
-            setSelectedZone('');
             setViews([]);
         }
+        setSelectedZone('');
+        setSelectedRecordName('');
+        setSelectedRecordText('');
     }, [selectedConfiguration]);
 
     useEffect(() => {
-        if (selectedView && selectedConfiguration) {
+        if (selectedView && selectedConfiguration && !selectedZone) {
             setSelectedZone('');
             const viewID = views.find((value) => {
                 return value.name === selectedView.name;
@@ -110,29 +132,94 @@ export const FormFields = ({ initialFormData }) => {
             const payload = new FormData();
             payload.append('view', viewID);
 
-            doPost('/add_text_record/zones', payload).then((data) => {
+            doPost('/update_text_record/zones', payload).then((data) => {
                 setZones(data.zones.length === 0 ? [] : data.zones);
             });
         } else {
+            setSelectedZone('');
             setZones([]);
         }
+        setSelectedRecordName('');
+        setSelectedRecordText('');
     }, [selectedView, selectedConfiguration]);
 
+    useEffect(() => {
+        if (selectedView && selectedConfiguration && selectedZone) {
+            setSelectedRecord({});
+            const zoneID = zones.find((value) => {
+                return value.name === selectedZone.name;
+            }).id;
+            const payload = new FormData();
+            payload.append('zone', zoneID);
 
-        // Columns in the list for text entries
-    const columns = [
-        {
-            id: 'text',
-            header: 'text',
-            width: 100,
+            doPost('/update_text_record/records', payload).then((data) => {
+                setRecords(data.records.length === 0 ? [] : data.records);
+                setRecords(data.records.length === 0 ? [] : data.records);
+
+            }).finally(() => {
+                setFilterText('');
+            });
+        } else {
+            setRecords([]);
         }
-    ];
+        setSelectedRecordName('');
+        setSelectedRecordText('');
+    }, [selectedZone]);
+
+    useEffect(() => {
+        if (filterText.length !== 0 && records.length !== 0) {
+            setSelectedRecord({});
+            setFilteredRecords(records.filter(
+                (rec) => rec.name.includes(filterText),
+            ));
+        }
+        else {
+            setFilteredRecords(records.filter(
+                (rec) => rec.name.includes(filterText),
+            ));
+        }
+        setSelectedRecordName('');
+        setSelectedRecordText('');
+    }, [records, filterText]);
+
+    useEffect(() => {
+        setSelectedRecord({});
+        //when the list of records is changed, record should be unselected
+    }, [records]);
+
+    useEffect(() => {
+        if (selectedRecord) {
+            setSelectedRecordName(selectedRecord["name"]);
+            setSelectedRecordText(selectedRecord["text"]);
+        }
+        else {
+            setSelectedRecordName("");
+            setSelectedRecordText("");
+        }
+    }, [selectedRecord]);
+
+    const handleRecordClick = useCallback((event) => {
+        const row = event.target.closest('tr');
+        setSelectedRecord(matchRecord(row.dataset.id));
+    }, [selectedRecord]);
+
+    const matchRecord = (id) => {
+        let match = {};
+        records.forEach((rec) => {
+           if (rec.id === parseInt(id)) {
+               match = rec;
+           }
+        });
+        return match;
+    }
 
     return (
-        <div className='UpdateTextRecordForm__fields FormFields--standardPadding'>
+        <DetailsGrid className='UpdateTextRecordForm__body FormFields--standardPadding'>
+
             <FormComboBoxField
                 id='configuration'
                 name='configuration'
+                className='UpdateTextRecordForm__configuration'
                 label='Configuration'
                 values={configurations}
                 noMatchText='No matching configuration was found'
@@ -143,6 +230,7 @@ export const FormFields = ({ initialFormData }) => {
             <FormComboBoxField
                 id='view'
                 name='view'
+                className='UpdateTextRecordForm__view'
                 label='View'
                 values={views}
                 disabled={!selectedConfiguration}
@@ -154,6 +242,7 @@ export const FormFields = ({ initialFormData }) => {
             <FormComboBoxField
                 id='zone'
                 name='zone'
+                className='UpdateTextRecordForm__zone'
                 label='Zone'
                 values={zones}
                 disabled={!selectedView}
@@ -161,67 +250,59 @@ export const FormFields = ({ initialFormData }) => {
                 placeholder='Start typing to search for a Zone'
                 required={true}
             />
+            <Layer className = 'UpdateTextRecordForm__recordTableLayer'>
+                <LabelLine htmlFor='recordTable' text='records'/>
+                <TableToolbar
+                    name = 'recordTable'
+                    id = 'recordTable'
+                    className='UpdateTextRecordForm__recordTable'
+                    label='List of text records'>
+                    <TableToolbarDefault hidden={false}>
+                        <TableToolbarSearch
+                            placeholder='Filter by record name'
+                            aria-label='Filter'
+                            onChange={(value) => {
+                                setFilterText(value);
+                            }}
+                        />
+                    </TableToolbarDefault>
+                    <TableScrollWrapper className='UpdateTextRecordForm__tableWrapper' tabIndex='-1'>
+                        <Table className='UpdateTextRecordForm__table' stickyHeader fixedLayout>
+                            <TableHead label="testLabel">
 
+                            </TableHead>
+                            <TableBody onClick={handleRecordClick}>
+                                {Object.entries(filteredRecords).map(([, value], id, name) => {
+                                    return (
+                                        <TableRow
+                                            key={value.name}
+                                            data-id={value.id}
+                                            selected={value.id===selectedRecord?.id}>
+                                            <TableCell>{value.name}</TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableScrollWrapper>
+                </TableToolbar>
+            </Layer>
 
-            <FormTextInput label='Text record' name='recordSearch' disabled={checkAllFieldsHasValue()} />
-
-            <Button
-                id='searchButton'
-                text="Search"
-                onClick={
-                    placeholder
-                    //TODO: implement search
-            }
+            <FormTextInput
+                label='Name'
+                name='recordName'
+                id='recordName'
+                className='UpdateTextRecordForm__recordName'
+                disabled={!selectedRecord}
             />
 
-            <FormTextInput label='Filter' name='filter' disabled={checkAllFieldsHasValue()} />
-
-            // <FormTextInput label='Text' name='oldText' disabled={checkAllFieldsHasValue()} />
-
-            <TableToolbar className='test_record_table'>
-                <TableScrollWrapper className='Workflows__tableWrapper' tabIndex='-1'>
-                    <Table className='Workflows__table' stickyHeader fixedLayout>
-                        <TableHead>
-                            <TableRow>
-                                {columns.map(({ text }) => (
-                                    <TableHeader
-                                        key={text}
-                                        sortable={false}
-                                        style={{ width: `${width}%` }}>
-                                    </TableHeader>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Object.entries(data.workflows).map(([, value], text) => {
-                                return (
-                                    <TableRow key={text} data-id={text}>
-                                        <TableCell>{value.text}</TableCell>
-                                        <TableCell>
-                                            <IconMenu
-                                                id={'Thing'}
-                                                icon={faEllipsisV}
-                                                flipped={true}>
-                                                <IconMenuItem
-                                                    text='Delete'
-                                                    onClick={() => deleteWorkflow(value.name)}
-                                                />
-                                            </IconMenu>
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </TableScrollWrapper>
-            </TableToolbar>
-
-
-
-
-            <FormTextInput label='Name' name='oldName' disabled={checkAllFieldsHasValue()} />
-
-            <FormTextInput label='New text' name='newText' disabled={checkAllFieldsHasValue()} />
-        </div>
+            <FormTextInput
+                label='New text'
+                name='recordText'
+                id='recordText'
+                className='UpdateTextRecordForm__newText'
+                disabled={!selectedRecord}
+            />
+        </DetailsGrid>
     );
 };
