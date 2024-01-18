@@ -23,7 +23,8 @@ SOFTWARE.
 import { useCallback, useEffect, useState } from 'react';
 import {
     DetailsGrid,
-    LabelLine, Layer,
+    LabelLine,
+    Layer,
     Table,
     TableBody,
     TableCell,
@@ -32,8 +33,8 @@ import {
     TableScrollWrapper,
     TableToolbar,
     TableToolbarDefault,
-    TableToolbarSearch
-} from "@bluecateng/pelagos";
+    TableToolbarSearch,
+} from '@bluecateng/pelagos';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FormTextInput } from '@bluecateng/pelagos-forms';
 import { useFormField } from '@bluecateng/auto-forms';
@@ -67,14 +68,10 @@ export const FormFields = ({ initialFormData }) => {
         error: selectedRecordError,
         setError: setSelectedRecordError,
     } = useFormField('record');
-    const {
-        value: selectedRecordName,
-        setValue: setSelectedRecordName,
-    } = useFormField("recordName");
-    const {
-        value: selectedRecordText,
-        setValue: setSelectedRecordText,
-    } = useFormField('recordText');
+    const { value: selectedRecordName, setValue: setSelectedRecordName } =
+        useFormField('recordName');
+    const { value: selectedRecordText, setValue: setSelectedRecordText } =
+        useFormField('recordText');
 
     const [views, setViews] = useState([]);
     const [zones, setZones] = useState([]);
@@ -100,7 +97,6 @@ export const FormFields = ({ initialFormData }) => {
             setSelectedZoneError(null);
         }
     }, [selectedConfiguration, selectedView, selectedZone]);
-
 
     useEffect(() => {
         if (selectedConfiguration) {
@@ -152,13 +148,14 @@ export const FormFields = ({ initialFormData }) => {
             const payload = new FormData();
             payload.append('zone', zoneID);
 
-            doPost('/update_text_record/records', payload).then((data) => {
-                setRecords(data.records.length === 0 ? [] : data.records);
-                setRecords(data.records.length === 0 ? [] : data.records);
-
-            }).finally(() => {
-                setFilterText('');
-            });
+            doPost('/update_text_record/records', payload)
+                .then((data) => {
+                    setRecords(data.records.length === 0 ? [] : data.records);
+                    setRecords(data.records.length === 0 ? [] : data.records);
+                })
+                .finally(() => {
+                    setFilterText('');
+                });
         } else {
             setRecords([]);
         }
@@ -169,14 +166,13 @@ export const FormFields = ({ initialFormData }) => {
     useEffect(() => {
         if (filterText.length !== 0 && records.length !== 0) {
             setSelectedRecord({});
-            setFilteredRecords(records.filter(
-                (rec) => rec.name.includes(filterText),
-            ));
-        }
-        else {
-            setFilteredRecords(records.filter(
-                (rec) => rec.name.includes(filterText),
-            ));
+            setFilteredRecords(
+                records.filter((rec) => rec.name.includes(filterText)),
+            );
+        } else {
+            setFilteredRecords(
+                records.filter((rec) => rec.name.includes(filterText)),
+            );
         }
         setSelectedRecordName('');
         setSelectedRecordText('');
@@ -189,33 +185,34 @@ export const FormFields = ({ initialFormData }) => {
 
     useEffect(() => {
         if (selectedRecord) {
-            setSelectedRecordName(selectedRecord["name"]);
-            setSelectedRecordText(selectedRecord["text"]);
-        }
-        else {
-            setSelectedRecordName("");
-            setSelectedRecordText("");
+            setSelectedRecordName(selectedRecord['name']);
+            setSelectedRecordText(selectedRecord['text']);
+        } else {
+            setSelectedRecordName('');
+            setSelectedRecordText('');
         }
     }, [selectedRecord]);
 
-    const handleRecordClick = useCallback((event) => {
-        const row = event.target.closest('tr');
-        setSelectedRecord(matchRecord(row.dataset.id));
-    }, [selectedRecord]);
+    const handleRecordClick = useCallback(
+        (event) => {
+            const row = event.target.closest('tr');
+            setSelectedRecord(matchRecord(row.dataset.id));
+        },
+        [selectedRecord],
+    );
 
     const matchRecord = (id) => {
         let match = {};
         records.forEach((rec) => {
-           if (rec.id === parseInt(id)) {
-               match = rec;
-           }
+            if (rec.id === parseInt(id)) {
+                match = rec;
+            }
         });
         return match;
-    }
+    };
 
     return (
         <DetailsGrid className='UpdateTextRecordForm__body FormFields--standardPadding'>
-
             <FormComboBoxField
                 id='configuration'
                 name='configuration'
@@ -250,11 +247,11 @@ export const FormFields = ({ initialFormData }) => {
                 placeholder='Start typing to search for a Zone'
                 required={true}
             />
-            <Layer className = 'UpdateTextRecordForm__recordTableLayer'>
-                <LabelLine htmlFor='recordTable' text='records'/>
+            <Layer className='UpdateTextRecordForm__recordTableLayer'>
+                <LabelLine htmlFor='recordTable' text='records' />
                 <TableToolbar
-                    name = 'recordTable'
-                    id = 'recordTable'
+                    name='recordTable'
+                    id='recordTable'
                     className='UpdateTextRecordForm__recordTable'
                     label='List of text records'>
                     <TableToolbarDefault hidden={false}>
@@ -266,22 +263,32 @@ export const FormFields = ({ initialFormData }) => {
                             }}
                         />
                     </TableToolbarDefault>
-                    <TableScrollWrapper className='UpdateTextRecordForm__tableWrapper' tabIndex='-1'>
-                        <Table className='UpdateTextRecordForm__table' stickyHeader fixedLayout>
-                            <TableHead label="testLabel">
-
-                            </TableHead>
+                    <TableScrollWrapper
+                        className='UpdateTextRecordForm__tableWrapper'
+                        tabIndex='-1'>
+                        <Table
+                            className='UpdateTextRecordForm__table'
+                            stickyHeader
+                            fixedLayout>
+                            <TableHead label='testLabel'></TableHead>
                             <TableBody onClick={handleRecordClick}>
-                                {Object.entries(filteredRecords).map(([, value], id, name) => {
-                                    return (
-                                        <TableRow
-                                            key={value.name}
-                                            data-id={value.id}
-                                            selected={value.id===selectedRecord?.id}>
-                                            <TableCell>{value.name}</TableCell>
-                                        </TableRow>
-                                    );
-                                })}
+                                {Object.entries(filteredRecords).map(
+                                    ([, value], id, name) => {
+                                        return (
+                                            <TableRow
+                                                key={value.name}
+                                                data-id={value.id}
+                                                selected={
+                                                    value.id ===
+                                                    selectedRecord?.id
+                                                }>
+                                                <TableCell>
+                                                    {value.name}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    },
+                                )}
                             </TableBody>
                         </Table>
                     </TableScrollWrapper>

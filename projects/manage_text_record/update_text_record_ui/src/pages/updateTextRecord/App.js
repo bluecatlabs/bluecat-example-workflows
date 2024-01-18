@@ -33,7 +33,7 @@ import {
     usePageModalSpinner,
     useTrigger,
 } from '@bluecat/limani';
-import {Form, validateNotEmpty} from '@bluecateng/auto-forms';
+import { Form, validateNotEmpty } from '@bluecateng/auto-forms';
 import { FormFields } from './FormFields';
 import './App.less';
 
@@ -43,11 +43,10 @@ const Content = () => {
     const { setError } = usePageError();
     const [triggerLoad, toggleTriggerLoad] = useTrigger();
     const [initialFormData, setInitialFormData] = useState(null);
-    const rules = {
-    };
+    const rules = {};
     const extraValidation = (
         errors,
-            {configuration, view, zone, recordName, recordText},
+        { configuration, view, zone, recordName, recordText },
     ) => ({
         ...errors,
         configuration: validateNotEmpty('Please select a configuration.')(
@@ -55,9 +54,9 @@ const Content = () => {
         ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
-        recordName: validateNotEmpty("Record must have a name.")(recordName),
-        recordText: validateNotEmpty("Record must have text.")(recordText),
-    })
+        recordName: validateNotEmpty('Record must have a name.')(recordName),
+        recordText: validateNotEmpty('Record must have text.')(recordText),
+    });
 
     useEffect(() => {
         doGet('/update_text_record/configurations')
@@ -79,21 +78,21 @@ const Content = () => {
             });
     }, [triggerLoad]);
 
-    const handleSubmit = (values, {setErrors}) => {
-        if (values["recordName"] && values["recordText"]){
-            const payload= new FormData();
+    const handleSubmit = (values, { setErrors }) => {
+        if (values['recordName'] && values['recordText']) {
+            const payload = new FormData();
             const data = {
-                zoneName: values["zone"]["name"],
-                record: values["record"],
-                recordID: values["record"]["id"],
-                oldName: values["record"]["name"],
-                newName: values["recordName"],
-                oldText: values["record"]['text'],
-                newText: values["recordText"],
+                zoneName: values['zone']['name'],
+                record: values['record'],
+                recordID: values['record']['id'],
+                oldName: values['record']['name'],
+                newName: values['recordName'],
+                oldText: values['record']['text'],
+                newText: values['recordText'],
             };
             for (const key in data) {
                 payload.append(key, data[key]);
-            };
+            }
             setBusy(true);
             doPost('/update_text_record/update', payload)
                 .then((data) => {
@@ -101,14 +100,21 @@ const Content = () => {
                     toggleTriggerLoad();
                 })
                 .catch((error) => {
-                    const { page: pageErrors } = processErrorMessages(error, {}, true);
-                    addMessages(pageErrors.map((text) => ({ 'type': 'error', 'text': text })));
+                    const { page: pageErrors } = processErrorMessages(
+                        error,
+                        {},
+                        true,
+                    );
+                    addMessages(
+                        pageErrors.map((text) => ({
+                            'type': 'error',
+                            'text': text,
+                        })),
+                    );
                 })
                 .finally(() => setBusy(false));
         }
-    }
-
-
+    };
 
     return (
         <>
@@ -119,7 +125,7 @@ const Content = () => {
                         initialValues={initialFormData}
                         extraValidation={extraValidation}
                         onSubmit={handleSubmit}
-                        className="updateTextRecord">
+                        className='updateTextRecord'>
                         <FormFields initialFormData={initialFormData} />
                         <FormButtons />
                     </Form>
