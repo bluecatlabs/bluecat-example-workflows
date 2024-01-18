@@ -137,7 +137,7 @@ const Content = () => {
 
 export default function App() {
     return (
-        <SimplePage pageTitle='update_text_record'>
+        <SimplePage pageTitle='Update text record'>
             <Content />
         </SimplePage>
     );
