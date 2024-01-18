@@ -61,14 +61,10 @@ export const FormFields = ({ initialFormData }) => {
         error: selectedZoneError,
         setError: setSelectedZoneError,
     } = useFormField('zone');
-    const {
-        value: selectedRecord,
-        setValue: setSelectedRecord,
-    } = useFormField('record');
-    const { setValue: setSelectedRecordName } =
-        useFormField('recordName');
-    const { setValue: setSelectedRecordText } =
-        useFormField('recordText');
+    const { value: selectedRecord, setValue: setSelectedRecord } =
+        useFormField('record');
+    const { setValue: setSelectedRecordName } = useFormField('recordName');
+    const { setValue: setSelectedRecordText } = useFormField('recordText');
 
     const [views, setViews] = useState([]);
     const [zones, setZones] = useState([]);

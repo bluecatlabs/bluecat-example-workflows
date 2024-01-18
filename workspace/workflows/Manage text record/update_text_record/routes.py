@@ -26,6 +26,7 @@ from bluecat.gateway.decorators import (
     page_exc_handler,
     require_permission,
 )
+
 # pylint: disable=import-error
 from bluecat.util import no_cache
 
