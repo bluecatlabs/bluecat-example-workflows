@@ -18,6 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Routes and back-end implementation of workflow "update_text_record"."""
+import logging
 import os
 
 from bluecat.gateway.decorators import (

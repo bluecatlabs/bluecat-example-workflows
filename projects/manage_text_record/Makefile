@@ -23,11 +23,6 @@ parentdir := $(shell dirname $(mkfile_path))
 
 ui-req:
 	cd $(parentdir)/update_text_record_ui && npm install
-	#cd $(parentdir) && npm install
-
-#ui-build:
-	#cd $(parentdir)/manage_text_record_ui/update_text_record_ui \
-	#cd $(parentdir)/update_text_record_ui \
 
 ui-build:
 	cd $(parentdir)/update_text_record_ui \
