@@ -18,7 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Routes and back-end implementation of workflow "update_text_record"."""
-import logging
 import os
 
 from bluecat.gateway.decorators import (
@@ -31,7 +30,6 @@ from bluecat.util import no_cache
 from .base import bp
 
 from flask import g, request, send_from_directory
-from pathlib import Path
 
 
 @bp.route("/")
@@ -44,7 +42,8 @@ def page():
     :return: Response with the page's HTML.
     """
     return send_from_directory(
-         os.path.dirname(os.path.abspath(str(__file__))), "html/updateTextRecord/index.html"
+        os.path.dirname(os.path.abspath(str(__file__))),
+        "html/updateTextRecord/index.html",
     )
 
 
@@ -115,7 +114,6 @@ def api_get_records():
             "fields": "id,name,text",
             "orderBy": "desc(name)",
             "limit": "9999",
-            #"filter": "type:eq('TXT')",
         },
     )
 
@@ -133,13 +131,13 @@ def base_data():
     """
 
     data = {
-        'configurations': [],
+        "configurations": [],
     }
     rdata = g.user.bam_api.v2.http_get(
         "/configurations",
         params={"fields": "id,name", "orderBy": "desc(name)", "limit": "9999"},
     )
-    data['configurations'] = rdata["data"]
+    data["configurations"] = rdata["data"]
 
     return data
 
@@ -182,14 +180,10 @@ def api_post_update_text_record():
             json=body,
         )
     except Exception as e:
-        rdata = {'error': str(e)}
-        return {
-            "error": rdata['error']
-        }
-
+        rdata = {"error": str(e)}
+        return {"error": rdata["error"]}
 
     return {
         "message": "Record successfully updated",
         "data": rdata,
     }
-
