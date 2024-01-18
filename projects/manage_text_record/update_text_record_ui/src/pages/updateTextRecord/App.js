@@ -38,7 +38,7 @@ import { FormFields } from './FormFields';
 import './App.less';
 
 const Content = () => {
-    const { addMessages, addSuccessMessage } = usePageMessages();
+    const { addMessages } = usePageMessages();
     const { setBusy } = usePageModalSpinner();
     const { setError } = usePageError();
     const [triggerLoad, toggleTriggerLoad] = useTrigger();
@@ -78,7 +78,7 @@ const Content = () => {
             });
     }, [triggerLoad]);
 
-    const handleSubmit = (values, { setErrors }) => {
+    const handleSubmit = (values, { }) => {
         if (values['recordName'] && values['recordText']) {
             const payload = new FormData();
             const data = {

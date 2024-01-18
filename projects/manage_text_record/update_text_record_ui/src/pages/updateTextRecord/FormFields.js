@@ -35,7 +35,6 @@ import {
     TableToolbarDefault,
     TableToolbarSearch,
 } from '@bluecateng/pelagos';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FormTextInput } from '@bluecateng/pelagos-forms';
 import { useFormField } from '@bluecateng/auto-forms';
 import { doPost, resetForm } from '@bluecat/limani';
@@ -80,10 +79,6 @@ export const FormFields = ({ initialFormData }) => {
 
     // filterText is used by the search bar on top of the table
     const [filterText, setFilterText] = useState('');
-
-    const checkAllFieldsHasValue = useCallback(() => {
-        return !(selectedConfiguration && selectedView && selectedZone);
-    }, [selectedZone, selectedConfiguration, selectedView]);
 
     // This is to remove the errors set from extraValidation on the form when the submit button is pressed
     useEffect(() => {
@@ -273,7 +268,7 @@ export const FormFields = ({ initialFormData }) => {
                             <TableHead label='testLabel'></TableHead>
                             <TableBody onClick={handleRecordClick}>
                                 {Object.entries(filteredRecords).map(
-                                    ([, value], id, name) => {
+                                    ([, value]) => {
                                         return (
                                             <TableRow
                                                 key={value.name}
