@@ -35,9 +35,8 @@ run: run-prep
 		-v "$(BASE_DIR)/workspace":/bluecat_gateway \
 		-v "$(BASE_DIR)/logs":/logs \
 	 	-u "$(shell id -u)" \
-	 	-e "BAM_IP=10.244.141.83" \
 		--name example-workflows \
-		quay.io/bluecat/stargate:23.2.2
+		quay.io/bluecat/gateway:23.2.2
 
 stop:
 	docker stop example-workflows
