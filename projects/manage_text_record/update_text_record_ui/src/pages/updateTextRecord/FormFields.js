@@ -237,7 +237,7 @@ export const FormFields = ({ initialFormData }) => {
                 required={true}
             />
             <Layer className='UpdateTextRecordForm__recordTableLayer'>
-                <LabelLine htmlFor='recordTable' text='records' />
+                <LabelLine htmlFor='recordTable' text='Records' />
                 <TableToolbar
                     name='recordTable'
                     id='recordTable'
