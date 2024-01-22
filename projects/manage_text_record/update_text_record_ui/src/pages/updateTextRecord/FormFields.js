@@ -201,7 +201,7 @@ export const FormFields = ({ initialFormData }) => {
     };
 
     return (
-        <DetailsGrid className='UpdateTextRecordForm__body FormFields--standardPadding'>
+        <DetailsGrid className='UpdateTextRecordForm__body'>
             <FormComboBoxField
                 id='configuration'
                 name='configuration'
