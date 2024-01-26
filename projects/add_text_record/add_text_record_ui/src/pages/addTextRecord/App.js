@@ -36,6 +36,7 @@ import {
 } from '@bluecat/limani';
 import { Form, validateNotEmpty } from '@bluecateng/auto-forms';
 import { FormFields } from './FormFields';
+import { LabelLine } from '@bluecateng/pelagos';
 import './App.less';
 
 const BE_FE = new Map([
@@ -107,6 +108,10 @@ const Content = () => {
 
     return (
         <>
+            <LabelLine
+                text='Workflow to add a text record to BAM. Retrieves and text record to the specified zone. 
+                Compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer. Uses REST v2 API.'
+            />
             {initialFormData && (
                 <FormLayout>
                     <Form
