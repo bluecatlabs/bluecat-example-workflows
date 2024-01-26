@@ -44,9 +44,14 @@ const Content = () => {
     const [triggerLoad, toggleTriggerLoad] = useTrigger();
     const [initialFormData, setInitialFormData] = useState(null);
     const rules = {};
-    const extraValidation = (errors, { configuration, view, zone, recordName, recordText }) => ({
+    const extraValidation = (
+        errors,
+        { configuration, view, zone, recordName, recordText },
+    ) => ({
         ...errors,
-        configuration: validateNotEmpty('Please select a configuration.')(configuration?.name),
+        configuration: validateNotEmpty('Please select a configuration.')(
+            configuration?.name,
+        ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
         recordName: validateNotEmpty('Record must have a name.')(recordName),
@@ -95,7 +100,11 @@ const Content = () => {
                     toggleTriggerLoad();
                 })
                 .catch((error) => {
-                    const { page: pageErrors } = processErrorMessages(error, {}, true);
+                    const { page: pageErrors } = processErrorMessages(
+                        error,
+                        {},
+                        true,
+                    );
                     addMessages(
                         pageErrors.map((text) => ({
                             'type': 'error',

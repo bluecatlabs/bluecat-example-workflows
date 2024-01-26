@@ -46,7 +46,9 @@ const Content = () => {
     const rules = {};
     const extraValidation = (errors, { configuration, view, zone }) => ({
         ...errors,
-        configuration: validateNotEmpty('Please select a configuration.')(configuration?.name),
+        configuration: validateNotEmpty('Please select a configuration.')(
+            configuration?.name,
+        ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
     });
@@ -72,13 +74,20 @@ const Content = () => {
     const handleSubmit = (values) => {
         if (values['record'] !== {} || values['record'] !== null) {
             setBusy(true);
-            doDelete('/manage_text_record/delete_text_record/delete/' + values['record']['id'])
+            doDelete(
+                '/manage_text_record/delete_text_record/delete/' +
+                    values['record']['id'],
+            )
                 .then((data) => {
                     addMessages([{ 'type': 'success', 'text': data.message }]);
                     toggleTriggerLoad();
                 })
                 .catch((error) => {
-                    const { page: pageErrors } = processErrorMessages(error, {}, true);
+                    const { page: pageErrors } = processErrorMessages(
+                        error,
+                        {},
+                        true,
+                    );
                     addMessages(
                         pageErrors.map((text) => ({
                             'type': 'error',
