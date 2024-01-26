@@ -29,7 +29,7 @@ run-prep:
 		&& cp workspace/permissions.json.sample workspace/permissions.json
 
 run: run-prep
-	docker run --rm \
+	docker run --rm -d \
 		-p 8001:8000 \
 		-p 44301:44300 \
 		-v "$(BASE_DIR)/workspace":/bluecat_gateway \
