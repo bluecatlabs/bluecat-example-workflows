@@ -18,19 +18,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Event handlers of workflow `manage_text_record`."""
-
-
-def initialize():
-    """Handle the `initialize` event."""
-    # Load the modules that add routes to the blueprint instance.
-    # NOTE: Some tools may report the import statement as unnecessary/unused.
-    # pylint: disable=unused-import
-    from . import routes  # noqa: F401
-
-
-def attach(application):
-    """Attach request handlers to the web application."""
-    from .base import bp
-
-    application.register_blueprint(bp)
+arrowParens: always
+bracketSameLine: true
+bracketSpacing: true
+printWidth: 100
+quoteProps: preserve
+semi: true
+singleQuote: true
+jsxSingleQuote: true
+tabWidth: 4
+trailingComma: all
+useTabs: false

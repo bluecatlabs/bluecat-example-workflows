@@ -35,27 +35,27 @@ from .base import bp
 from flask import g, request, send_from_directory
 
 
-@bp.route("/")
+@bp.route("/delete_text_record")
 @page_exc_handler(default_message='Failed to load page "update_text_record".')
-@require_permission("update_text_record")
+@require_permission("delete_text_record")
 def page():
     """
-    Render page "update_text_record".
+    Render page "Delete text record".
 
     :return: Response with the page's HTML.
     """
     return send_from_directory(
         os.path.dirname(os.path.abspath(str(__file__))),
-        "html/updateTextRecord/index.html",
+        "html/deleteTextRecord/index.html",
     )
 
 
-@bp.route("/configurations")
+@bp.route("/delete_text_record/configurations")
 @api_exc_handler(default_message="Failed to get configurations available on BAM.")
-@require_permission("update_text_record")
+@require_permission("delete_text_record")
 def api_get_configurations():
     """
-    Get configurations for the dropDown in the Update text recordpage
+    Get configurations for the dropDown in Delete text record page
     """
     rdata = g.user.bam_api.v2.http_get(
         "/configurations",
@@ -65,12 +65,12 @@ def api_get_configurations():
     return {"configurations": configurations}
 
 
-@bp.route("/views", methods=["POST"])
+@bp.route("/delete_text_record/views", methods=["POST"])
 @api_exc_handler(default_message="Failed to get views available on BAM.")
-@require_permission("update_text_record")
+@require_permission("delete_text_record")
 def api_get_views():
     """
-    Get views under the selected configuration in the Update text record page
+    Get views under the selected configuration in Delete text record page
     """
     configuration_id = request.form["configuration"]
 
@@ -82,12 +82,12 @@ def api_get_views():
     return {"views": views}
 
 
-@bp.route("/zones", methods=["POST"])
+@bp.route("/delete_text_record/zones", methods=["POST"])
 @api_exc_handler(default_message="Failed to get zones available on BAM.")
-@require_permission("update_text_record")
+@require_permission("delete_text_record")
 def api_get_zones():
     """
-    Get zones under the selected view in the Update text record page
+    Get zones under the selected view in Delete text record page
     """
     view_id = request.form["view"]
     rdata = g.user.bam_api.v2.http_get(
@@ -103,12 +103,12 @@ def api_get_zones():
     return {"zones": zones}
 
 
-@bp.route("/records", methods=["POST"])
+@bp.route("/delete_text_record/records", methods=["POST"])
 @api_exc_handler(default_message="Failed to get records available on BAM.")
-@require_permission("update_text_record")
+@require_permission("delete_text_record")
 def api_get_records():
     """
-    Get records under the selected zone in the Update text record page
+    Get records under the selected zone in Delete text record page
     """
     zone_id = request.form["zone"]
     rdata = g.user.bam_api.v2.http_get(
@@ -124,10 +124,10 @@ def api_get_records():
     return {"records": records}
 
 
-@bp.route("/data", methods=["POST"])
+@bp.route("/delete_text_record/data", methods=["POST"])
 @no_cache
 @api_exc_handler(default_message="Failed to perform the action.")
-@require_permission("update_text_record")
+@require_permission("delete_text_record")
 def base_data():
     """
     get the list of configurations
@@ -145,48 +145,14 @@ def base_data():
     return data
 
 
-@bp.route("/update", methods=["POST"])
+@bp.route("/delete_text_record/delete/<id>", methods=["DELETE"])
 @no_cache
-@api_exc_handler(default_message="Failed to perform the action.")
-@require_permission("update_text_record")
-def api_post_update_text_record():
-    """
-    update the text record
-    """
+@api_exc_handler(default_message="Failed to delete text record.")
+@require_permission("delete_text_record")
+def api_delete_text_record(id):  # pylint: disable=redefined-builtin
+    """Deletes a text record"""
 
-    zone_name = request.form["zoneName"]
-    record_id = request.form["recordID"]
-    old_name = request.form["oldName"]
-    new_name = request.form["newName"]
-    new_text = request.form["newText"]
-
-    headers = {}
-    if old_name:
-        absolute_name = old_name + "." + zone_name
-    else:
-        absolute_name = None
-        headers = {"id": record_id}
-
-    body = {
-        "id": record_id,
-        "type": "TXTRecord",
-        "name": new_name if new_name else None,
-        "text": new_text if new_text else None,
-        "absoluteName": absolute_name,
-    }
-
-    try:
-        rdata = g.user.bam_api.v2.http_put(
-            f"/resourceRecords/{record_id}",
-            headers=headers,
-            params={},
-            json=body,
-        )
-    except Exception as e:
-        rdata = {"error": str(e)}
-        return {"error": rdata["error"]}
-
-    return {
-        "message": "Record successfully updated",
-        "data": rdata,
-    }
+    g.user.bam_api.v2.http_delete(
+        f"/resourceRecords/{id}",
+    )
+    return {"message": "Deleted resource record successfully."}

@@ -29,7 +29,7 @@ run-prep:
 		&& cp workspace/permissions.json.sample workspace/permissions.json
 
 run: run-prep
-	docker run --rm -d \
+	docker run --rm \
 		-p 8001:8000 \
 		-p 44301:44300 \
 		-v "$(BASE_DIR)/workspace":/bluecat_gateway \
@@ -69,3 +69,4 @@ purge:
 	make -f projects/add_text_record/Makefile purge
 	make -f projects/get_object_details/Makefile purge
 	make -f projects/configuration_details/Makefile purge
+	make -f projects/manage_text_record/Makefile purge

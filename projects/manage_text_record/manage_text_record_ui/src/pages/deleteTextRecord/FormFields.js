@@ -35,7 +35,6 @@ import {
     TableToolbarDefault,
     TableToolbarSearch,
 } from '@bluecateng/pelagos';
-import { FormTextInput } from '@bluecateng/pelagos-forms';
 import { useFormField } from '@bluecateng/auto-forms';
 import { doPost, resetForm } from '@bluecat/limani';
 import FormComboBoxField from '../../components/FormComboBoxField';
@@ -61,10 +60,7 @@ export const FormFields = ({ initialFormData }) => {
         error: selectedZoneError,
         setError: setSelectedZoneError,
     } = useFormField('zone');
-    const { value: selectedRecord, setValue: setSelectedRecord } =
-        useFormField('record');
-    const { setValue: setSelectedRecordName } = useFormField('recordName');
-    const { setValue: setSelectedRecordText } = useFormField('recordText');
+    const { value: selectedRecord, setValue: setSelectedRecord } = useFormField('record');
 
     const [views, setViews] = useState([]);
     const [zones, setZones] = useState([]);
@@ -96,7 +92,7 @@ export const FormFields = ({ initialFormData }) => {
                 })?.id ?? '';
             const payload = new FormData();
             payload.append('configuration', configurationID);
-            doPost('/update_text_record/views', payload).then((data) => {
+            doPost('/manage_text_record/delete_text_record/views', payload).then((data) => {
                 setViews(data.views.length === 0 ? [] : data.views);
             });
         } else {
@@ -104,8 +100,6 @@ export const FormFields = ({ initialFormData }) => {
             setViews([]);
         }
         setSelectedZone('');
-        setSelectedRecordName('');
-        setSelectedRecordText('');
     }, [selectedConfiguration]);
 
     useEffect(() => {
@@ -117,15 +111,13 @@ export const FormFields = ({ initialFormData }) => {
             const payload = new FormData();
             payload.append('view', viewID);
 
-            doPost('/update_text_record/zones', payload).then((data) => {
+            doPost('/manage_text_record/delete_text_record/zones', payload).then((data) => {
                 setZones(data.zones.length === 0 ? [] : data.zones);
             });
         } else {
             setSelectedZone('');
             setZones([]);
         }
-        setSelectedRecordName('');
-        setSelectedRecordText('');
     }, [selectedView, selectedConfiguration]);
 
     useEffect(() => {
@@ -137,7 +129,7 @@ export const FormFields = ({ initialFormData }) => {
             const payload = new FormData();
             payload.append('zone', zoneID);
 
-            doPost('/update_text_record/records', payload)
+            doPost('/manage_text_record/delete_text_record/records', payload)
                 .then((data) => {
                     setRecords(data.records.length === 0 ? [] : data.records);
                     setRecords(data.records.length === 0 ? [] : data.records);
@@ -148,39 +140,21 @@ export const FormFields = ({ initialFormData }) => {
         } else {
             setRecords([]);
         }
-        setSelectedRecordName('');
-        setSelectedRecordText('');
     }, [selectedZone]);
 
     useEffect(() => {
         if (filterText.length !== 0 && records.length !== 0) {
             setSelectedRecord({});
-            setFilteredRecords(
-                records.filter((rec) => rec.name.includes(filterText)),
-            );
+            setFilteredRecords(records.filter((rec) => rec.name.includes(filterText)));
         } else {
-            setFilteredRecords(
-                records.filter((rec) => rec.name.includes(filterText)),
-            );
+            setFilteredRecords(records.filter((rec) => rec.name.includes(filterText)));
         }
-        setSelectedRecordName('');
-        setSelectedRecordText('');
     }, [records, filterText]);
 
     useEffect(() => {
         setSelectedRecord({});
         //when the list of records is changed, record should be unselected
     }, [records]);
-
-    useEffect(() => {
-        if (selectedRecord) {
-            setSelectedRecordName(selectedRecord['name']);
-            setSelectedRecordText(selectedRecord['text']);
-        } else {
-            setSelectedRecordName('');
-            setSelectedRecordText('');
-        }
-    }, [selectedRecord]);
 
     const handleRecordClick = useCallback(
         (event) => {
@@ -201,11 +175,11 @@ export const FormFields = ({ initialFormData }) => {
     };
 
     return (
-        <DetailsGrid className='UpdateTextRecordForm__body'>
+        <DetailsGrid className='DeleteTextRecordForm__body'>
             <FormComboBoxField
                 id='configuration'
                 name='configuration'
-                className='UpdateTextRecordForm__configuration'
+                className='DeleteTextRecordForm__configuration'
                 label='Configuration'
                 values={configurations}
                 noMatchText='No matching configuration was found'
@@ -216,7 +190,7 @@ export const FormFields = ({ initialFormData }) => {
             <FormComboBoxField
                 id='view'
                 name='view'
-                className='UpdateTextRecordForm__view'
+                className='DeleteTextRecordForm__view'
                 label='View'
                 values={views}
                 disabled={!selectedConfiguration}
@@ -228,7 +202,7 @@ export const FormFields = ({ initialFormData }) => {
             <FormComboBoxField
                 id='zone'
                 name='zone'
-                className='UpdateTextRecordForm__zone'
+                className='DeleteTextRecordForm__zone'
                 label='Zone'
                 values={zones}
                 disabled={!selectedView}
@@ -236,12 +210,12 @@ export const FormFields = ({ initialFormData }) => {
                 placeholder='Start typing to search for a Zone'
                 required={true}
             />
-            <Layer className='UpdateTextRecordForm__recordTableLayer'>
+            <Layer className='DeleteTextRecordForm__recordTableLayer'>
                 <LabelLine htmlFor='recordTable' text='Records' />
                 <TableToolbar
                     name='recordTable'
                     id='recordTable'
-                    className='UpdateTextRecordForm__recordTable'
+                    className='DeleteTextRecordForm__recordTable'
                     label='List of text records'>
                     <TableToolbarDefault hidden={false}>
                         <TableToolbarSearch
@@ -253,52 +227,26 @@ export const FormFields = ({ initialFormData }) => {
                         />
                     </TableToolbarDefault>
                     <TableScrollWrapper
-                        className='UpdateTextRecordForm__tableWrapper'
+                        className='DeleteTextRecordForm__tableWrapper'
                         tabIndex='-1'>
-                        <Table
-                            className='UpdateTextRecordForm__table'
-                            stickyHeader
-                            fixedLayout>
+                        <Table className='DeleteTextRecordForm__table' stickyHeader fixedLayout>
                             <TableHead label='testLabel'></TableHead>
                             <TableBody onClick={handleRecordClick}>
-                                {Object.entries(filteredRecords).map(
-                                    ([, value]) => {
-                                        return (
-                                            <TableRow
-                                                key={value.name}
-                                                data-id={value.id}
-                                                selected={
-                                                    value.id ===
-                                                    selectedRecord?.id
-                                                }>
-                                                <TableCell>
-                                                    {value.name}
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    },
-                                )}
+                                {Object.entries(filteredRecords).map(([, value]) => {
+                                    return (
+                                        <TableRow
+                                            key={value.name}
+                                            data-id={value.id}
+                                            selected={value.id === selectedRecord?.id}>
+                                            <TableCell>{value.name}</TableCell>
+                                        </TableRow>
+                                    );
+                                })}
                             </TableBody>
                         </Table>
                     </TableScrollWrapper>
                 </TableToolbar>
             </Layer>
-
-            <FormTextInput
-                label='Name'
-                name='recordName'
-                id='recordName'
-                className='UpdateTextRecordForm__recordName'
-                disabled={!selectedRecord}
-            />
-
-            <FormTextInput
-                label='New text'
-                name='recordText'
-                id='recordText'
-                className='UpdateTextRecordForm__newText'
-                disabled={!selectedRecord}
-            />
         </DetailsGrid>
     );
 };
