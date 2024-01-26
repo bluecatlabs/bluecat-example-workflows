@@ -110,7 +110,7 @@ const Content = () => {
                         onSubmit={handleSubmit}
                         className='DeleteTextRecord'>
                         <FormFields initialFormData={initialFormData} />
-                        <FormButtons />
+                        <FormButtons saveButtonLabel='Delete' />
                     </Form>
                 </FormLayout>
             )}

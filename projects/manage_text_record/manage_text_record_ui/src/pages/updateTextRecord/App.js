@@ -127,7 +127,7 @@ const Content = () => {
                         onSubmit={handleSubmit}
                         className='UpdateTextRecord'>
                         <FormFields initialFormData={initialFormData} />
-                        <FormButtons />
+                        <FormButtons saveButtonLabel='Update' />
                     </Form>
                 </FormLayout>
             )}

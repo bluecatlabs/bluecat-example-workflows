@@ -26,8 +26,7 @@ def initialize():
     # Load the modules that add routes to the blueprint instance.
     # NOTE: Some tools may report the import statement as unnecessary/unused.
     # pylint: disable=unused-import
-    from . import update_text_record  # noqa: F401
-    from . import delete_text_record  # noqa: F401
+    from . import routes  # noqa: F401
 
 
 def attach(application):
