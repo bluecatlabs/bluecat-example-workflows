@@ -109,7 +109,7 @@ const Content = () => {
     return (
         <>
             <LabelLine
-                text='Workflow to add a text record to BAM. Retrieves and text record to the specified zone. 
+                text='Workflow to add a text record to BAM. Retrieves the text record from specified zone. 
                 Compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer. Uses REST v2 API.'
             />
             {initialFormData && (
