@@ -386,8 +386,8 @@ const Content = () => {
     return (
         <>
             <LabelLine
-                text='Workflow lists the name, description, and ID number of all existing BAM configurations. Can also add new configurations.
-            Compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer. Uses REST v2 API.'
+                text='The workflow lists the name, description, and ID number of all existing BAM configurations. It can also add new configurations.
+            It is compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer, and uses BAM REST v2 API.'
             />
             <div
                 className={`ConfigurationDetails__main${

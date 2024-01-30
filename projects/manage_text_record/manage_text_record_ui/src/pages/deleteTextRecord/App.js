@@ -103,8 +103,8 @@ const Content = () => {
     return (
         <>
             <LabelLine
-                text='Workflow to delete an existing text record. Searches for and filters text records. 
-            Compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer. Uses REST v2 API.'
+                text='This is a workflow to delete an existing text record. It searches for and filters text records. 
+            It is compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer, and uses BAM REST v2 API.'
             />
             {initialFormData && (
                 <FormLayout>
