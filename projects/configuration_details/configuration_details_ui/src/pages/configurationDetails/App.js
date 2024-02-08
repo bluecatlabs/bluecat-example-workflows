@@ -52,12 +52,7 @@ import {
     TableToolbar,
     TableToolbarDefault,
 } from '@bluecateng/pelagos';
-import {
-    Form,
-    validateAnd,
-    validateMatches,
-    validateNotEmpty,
-} from '@bluecateng/auto-forms';
+import { Form, validateNotEmpty } from '@bluecateng/auto-forms';
 import { FormSubmit, FormTextInput } from '@bluecateng/pelagos-forms';
 import './App.less';
 
@@ -109,7 +104,7 @@ const Content = () => {
 
     // Rules for the add Configuration panel
     const configurationRules = {
-        name: validateNotEmpty('The configuration name is required.')
+        name: validateNotEmpty('The configuration name is required.'),
     };
 
     const closeAllPanelsAndSetValuesToDefault = () => {
