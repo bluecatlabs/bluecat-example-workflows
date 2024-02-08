@@ -110,10 +110,7 @@ const Content = () => {
     // Rules for the add Configuration panel
     const configurationRules = {
         name: validateAnd([
-            validateMatches(
-                /^[a-zA-Z0-9][a-zA-Z0-9_-]*$/,
-                'Invalid configuration name.',
-            ),
+            validateMatches(/^[a-zA-Z0-9 _-]*$/, 'Invalid configuration name.'),
             validateNotEmpty('The configuration name is required.'),
         ]),
     };
