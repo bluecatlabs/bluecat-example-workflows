@@ -33,9 +33,9 @@ export default (values, setError, errorText, disable) => {
                 return [];
             }
 
-            const text_lower = text.toLowerCase();
+            const textLower = text.toLowerCase();
             const suggestions = names.filter(({ name }) =>
-                name.toLowerCase().includes(text_lower),
+                name.toLowerCase().includes(textLower),
             );
             if (!suggestions.length) {
                 setError(errorText);
@@ -46,8 +46,8 @@ export default (values, setError, errorText, disable) => {
                 .sort((a, b) => {
                     const an = a.name;
                     const bn = b.name;
-                    const as = an.toLowerCase().startsWith(text_lower);
-                    const bs = bn.toLowerCase().startsWith(text_lower);
+                    const as = an.toLowerCase().startsWith(textLower);
+                    const bs = bn.toLowerCase().startsWith(textLower);
                     return bs - as || an.localeCompare(bn);
                 })
                 .map(({ id, name }) => ({ id, name }));
