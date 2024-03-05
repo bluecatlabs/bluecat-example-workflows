@@ -24,6 +24,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { FormTextInput } from '@bluecateng/pelagos-forms';
 import { useFormField } from '@bluecateng/auto-forms';
 import { doPost, resetForm } from '@bluecat/limani';
+import { t } from '@bluecateng/l10n.macro';
 import FormComboBoxField from '../../components/FormComboBoxField';
 
 export const FormFields = ({ initialFormData }) => {
@@ -108,42 +109,42 @@ export const FormFields = ({ initialFormData }) => {
             <FormComboBoxField
                 id='configuration'
                 name='configuration'
-                label='Configuration'
+                label={t`Configuration`}
                 values={configurations}
-                noMatchText='No matching configuration was found'
-                placeholder='Start typing to search for a Configuration'
+                noMatchText={t`No matching configuration was found`}
+                placeholder={t`Start typing to search for a Configuration`}
                 required={true}
             />
 
             <FormComboBoxField
                 id='view'
                 name='view'
-                label='View'
+                label={t`View`}
                 values={views}
                 disabled={!selectedConfiguration}
-                noMatchText='No matching view was found'
-                placeholder='Start typing to search for a View'
+                noMatchText={t`No matching view was found`}
+                placeholder={t`Start typing to search for a View`}
                 required={true}
             />
 
             <FormComboBoxField
                 id='zone'
                 name='zone'
-                label='Zone'
+                label={t`Zone`}
                 values={zones}
                 disabled={!selectedView}
-                noMatchText='No matching zone was found'
-                placeholder='Start typing to search for a Zone'
+                noMatchText={t`No matching zone was found`}
+                placeholder={t`Start typing to search for a Zone`}
                 required={true}
             />
 
             <FormTextInput
-                label='Name'
+                label={t`Name`}
                 name='name'
                 disabled={checkAllFieldsHasValue()}
             />
             <FormTextInput
-                label='Text'
+                label={t`Text`}
                 name='text'
                 disabled={checkAllFieldsHasValue()}
             />

@@ -88,6 +88,10 @@ module.exports = [
                         filename: 'fonts/[hash][ext]',
                     },
                 },
+                {
+                  test: /\.po$/,
+                  loader: '@bluecateng/l10n-loader',
+                }
             ],
         },
         plugins: [

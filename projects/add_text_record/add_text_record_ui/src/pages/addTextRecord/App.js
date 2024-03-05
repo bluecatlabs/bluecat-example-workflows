@@ -37,6 +37,7 @@ import {
 import { Form, validateNotEmpty } from '@bluecateng/auto-forms';
 import { FormFields } from './FormFields';
 import { LabelLine } from '@bluecateng/pelagos';
+import { t } from '@bluecateng/l10n.macro';
 import './App.less';
 
 const BE_FE = new Map([
@@ -75,11 +76,11 @@ const Content = () => {
 
     const extraValidation = (errors, { configuration, view, zone }) => ({
         ...errors,
-        configuration: validateNotEmpty('Please select a configuration.')(
+        configuration: validateNotEmpty(t`Please select a configuration.`)(
             configuration?.name,
         ),
-        view: validateNotEmpty('Please select a view.')(view?.name),
-        zone: validateNotEmpty('Please select a zone.')(zone?.name),
+        view: validateNotEmpty(t`Please select a view.`)(view?.name),
+        zone: validateNotEmpty(t`Please select a zone.`)(zone?.name),
     });
 
     const handleSubmit = (values, { setErrors }) => {
@@ -107,32 +108,34 @@ const Content = () => {
     };
 
     return (
-        <>
-            <LabelLine
-                text='This is a workflow to add a text record to BAM. It retrieves the text record from a specified zone. 
-                It is compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer, and uses BAM REST v2 API.'
-            />
-            {initialFormData && (
-                <FormLayout>
-                    <Form
-                        className='AddTextRecordForm'
-                        initialValues={initialFormData}
-                        rules={{}}
-                        extraValidation={extraValidation}
-                        onSubmit={handleSubmit}>
-                        <FormFields initialFormData={initialFormData} />
-                        <FormButtons />
-                    </Form>
-                </FormLayout>
-            )}
-        </>
+        <PageBody>
+            <PageContent pageTitle={t`Add text record`}>
+                <LabelLine
+                    text={t`This is a workflow to add a text record to BAM. It retrieves the text record from a specified zone.
+                    It is compatible with Gateway 23.2 or newer, BAM 9.5.0 or newer, and uses BAM REST v2 API.`}
+                />
+                {initialFormData && (
+                    <FormLayout>
+                        <Form
+                            className='AddTextRecordForm'
+                            initialValues={initialFormData}
+                            rules={{}}
+                            extraValidation={extraValidation}
+                            onSubmit={handleSubmit}>
+                            <FormFields initialFormData={initialFormData} />
+                            <FormButtons />
+                        </Form>
+                    </FormLayout>
+                )}
+            </PageContent>
+        </PageBody>
     );
 };
 
 export default function App() {
     return (
-        <SimplePage pageTitle='Add text record'>
+        <PageToolkit onLanguageChange={setLanguage}>
             <Content />
-        </SimplePage>
+        </PageToolkit>
     );
 }

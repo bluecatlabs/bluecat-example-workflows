@@ -16,11 +16,18 @@
     "dependencies": {
         "@bluecat/limani": "^1.1.6-dev",
         "@bluecateng/auto-forms": "^1.0.0",
+        "@bluecateng/l10n-cli": "^0.1.8",
+        "@bluecateng/l10n-core": "^0.2.0",
+        "@bluecateng/l10n-icu2obj": "^0.1.5",
+        "@bluecateng/l10n-jest": "^0.3.0",
+        "@bluecateng/l10n-loader": "^0.1.5",
+        "@bluecateng/l10n.macro": "^0.1.6",
         "@bluecateng/pelagos": "^12.4.0",
         "@bluecateng/pelagos-forms": "^5.0.0",
         "@bluecateng/smooth-reorder": "^1.0.1",
         "@fortawesome/free-regular-svg-icons": "^6.2.0",
         "@fortawesome/free-solid-svg-icons": "^6.2.0",
+        "babel-loader": "^8.2.3",
         "css-loader": "^6.5.1",
         "less-loader": "^10.2.0",
         "preact": "^10.6.6",
@@ -60,5 +67,14 @@
             "@bluecateng/stylelint-config"
         ],
         "customSyntax": "postcss-less"
+    },
+    "bc-l10n": {
+        "hashLength": 4,
+        "module": "src/l10n",
+        "catalogPath": "src/l10n/{locale}",
+        "locales": [
+            "en",
+            "fr"
+        ]
     }
 }

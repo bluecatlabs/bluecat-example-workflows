@@ -30,4 +30,8 @@ module.exports = {
         ],
         ['@babel/react', { runtime: 'automatic' }],
     ],
+    plugins: [
+      "macros"
+    ]
+
 };
