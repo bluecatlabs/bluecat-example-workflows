@@ -50,7 +50,9 @@ const Content = () => {
         { configuration, view, zone, record, recordName, recordText },
     ) => ({
         ...errors,
-        configuration: validateNotEmpty('Please select a configuration.')(configuration?.name),
+        configuration: validateNotEmpty('Please select a configuration.')(
+            configuration?.name,
+        ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
         record: validateNotEmpty('Please select a record.')(record.name),
@@ -100,7 +102,11 @@ const Content = () => {
                     toggleTriggerLoad();
                 })
                 .catch((error) => {
-                    const { page: pageErrors } = processErrorMessages(error, {}, true);
+                    const { page: pageErrors } = processErrorMessages(
+                        error,
+                        {},
+                        true,
+                    );
                     addMessages(
                         pageErrors.map((text) => ({
                             'type': 'error',

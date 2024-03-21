@@ -23,7 +23,10 @@ SOFTWARE.
 import { useCallback, useMemo } from 'react';
 
 export default (values, setError, errorText, disable) => {
-    const names = useMemo(() => values.map(({ id, name }) => ({ id, name })), [values]);
+    const names = useMemo(
+        () => values.map(({ id, name }) => ({ id, name })),
+        [values],
+    );
     return useCallback(
         (text) => {
             if (disable) {
@@ -31,7 +34,9 @@ export default (values, setError, errorText, disable) => {
             }
 
             const textLower = text.toLowerCase();
-            const suggestions = names.filter(({ name }) => name.toLowerCase().includes(textLower));
+            const suggestions = names.filter(({ name }) =>
+                name.toLowerCase().includes(textLower),
+            );
             if (!suggestions.length) {
                 setError(errorText);
                 return suggestions;

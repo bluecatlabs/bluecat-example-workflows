@@ -60,7 +60,8 @@ export const FormFields = ({ initialFormData }) => {
         error: selectedZoneError,
         setError: setSelectedZoneError,
     } = useFormField('zone');
-    const { value: selectedRecord, setValue: setSelectedRecord } = useFormField('record');
+    const { value: selectedRecord, setValue: setSelectedRecord } =
+        useFormField('record');
 
     const [views, setViews] = useState([]);
     const [zones, setZones] = useState([]);
@@ -92,7 +93,10 @@ export const FormFields = ({ initialFormData }) => {
                 })?.id ?? '';
             const payload = new FormData();
             payload.append('configuration', configurationID);
-            doPost('/manage_text_record/delete_text_record/views', payload).then((data) => {
+            doPost(
+                '/manage_text_record/delete_text_record/views',
+                payload,
+            ).then((data) => {
                 setViews(data.views.length === 0 ? [] : data.views);
             });
         } else {
@@ -111,7 +115,10 @@ export const FormFields = ({ initialFormData }) => {
             const payload = new FormData();
             payload.append('view', viewID);
 
-            doPost('/manage_text_record/delete_text_record/zones', payload).then((data) => {
+            doPost(
+                '/manage_text_record/delete_text_record/zones',
+                payload,
+            ).then((data) => {
                 setZones(data.zones.length === 0 ? [] : data.zones);
             });
         } else {
@@ -145,9 +152,13 @@ export const FormFields = ({ initialFormData }) => {
     useEffect(() => {
         if (filterText.length !== 0 && records.length !== 0) {
             setSelectedRecord({});
-            setFilteredRecords(records.filter((rec) => rec.name.includes(filterText)));
+            setFilteredRecords(
+                records.filter((rec) => rec.name.includes(filterText)),
+            );
         } else {
-            setFilteredRecords(records.filter((rec) => rec.name.includes(filterText)));
+            setFilteredRecords(
+                records.filter((rec) => rec.name.includes(filterText)),
+            );
         }
     }, [records, filterText]);
 
@@ -229,19 +240,29 @@ export const FormFields = ({ initialFormData }) => {
                     <TableScrollWrapper
                         className='DeleteTextRecordForm__tableWrapper'
                         tabIndex='-1'>
-                        <Table className='DeleteTextRecordForm__table' stickyHeader fixedLayout>
+                        <Table
+                            className='DeleteTextRecordForm__table'
+                            stickyHeader
+                            fixedLayout>
                             <TableHead label='testLabel'></TableHead>
                             <TableBody onClick={handleRecordClick}>
-                                {Object.entries(filteredRecords).map(([, value]) => {
-                                    return (
-                                        <TableRow
-                                            key={value.name}
-                                            data-id={value.id}
-                                            selected={value.id === selectedRecord?.id}>
-                                            <TableCell>{value.name}</TableCell>
-                                        </TableRow>
-                                    );
-                                })}
+                                {Object.entries(filteredRecords).map(
+                                    ([, value]) => {
+                                        return (
+                                            <TableRow
+                                                key={value.name}
+                                                data-id={value.id}
+                                                selected={
+                                                    value.id ===
+                                                    selectedRecord?.id
+                                                }>
+                                                <TableCell>
+                                                    {value.name}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    },
+                                )}
                             </TableBody>
                         </Table>
                     </TableScrollWrapper>
