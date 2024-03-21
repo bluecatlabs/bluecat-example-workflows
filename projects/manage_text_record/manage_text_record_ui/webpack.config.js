@@ -30,10 +30,7 @@ module.exports = [
             deleteTextRecord: './src/pages/deleteTextRecord/index.js',
         },
         output: {
-            path: path.join(
-                __dirname,
-                '../../../workspace/workflows/manage_text_record/',
-            ),
+            path: path.join(__dirname, '../../../workspace/workflows/manage_text_record/'),
             publicPath: '/manage_text_record/',
             filename: 'js/[name].js',
             assetModuleFilename: 'img/[name][ext]',
