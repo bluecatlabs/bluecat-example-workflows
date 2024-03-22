@@ -291,7 +291,7 @@ export const FormFields = ({ initialFormData }) => {
                             </TableBody>
                         </Table>
                     </TableScrollWrapper>
-                    <FieldError text={selectedRecordError} />
+                    <FieldError id='record-error' text={selectedRecordError} />
                 </TableToolbar>
             </Layer>
 
