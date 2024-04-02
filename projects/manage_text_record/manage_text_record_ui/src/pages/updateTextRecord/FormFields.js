@@ -145,8 +145,7 @@ export const FormFields = ({ initialFormData }) => {
 
             doPost('/manage_text_record/update_text_record/records', payload)
                 .then((data) => {
-                    console.log('Records: \n'+JSON.stringify(data.records, null, 4)+'\n\n')
-                    data.records.map((rec) => (rec.displayName = rec.name ? rec.name : "(Same as zone)"))
+                    data.records.map((rec) => (rec.displayName = rec.name ? rec.name : "Same as zone named text record"))
                     setRecords(data.records.length === 0 ? [] : data.records);
                 })
                 .finally(() => {
