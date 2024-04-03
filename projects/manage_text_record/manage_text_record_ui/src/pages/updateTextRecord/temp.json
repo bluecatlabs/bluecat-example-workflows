@@ -1,0 +1,44 @@
+{
+    "id": 115476,
+    "type": "TXTRecord",
+    "name": null,
+    "configuration": {
+        "id": 114579,
+        "type": "Configuration",
+        "name": "Test Config 1",
+        "_links": {
+            "self": {
+                "href": "/api/v2/configurations/114579"
+            }
+        }
+    },
+    "ttl": null,
+    "absoluteName": "ZONE_two",
+    "comment": null,
+    "dynamic": false,
+    "text": null,
+    "userDefinedFields": null,
+    "_links": {
+        "self": {
+            "href": "/api/v2/resourceRecords/115476"
+        },
+        "collection": {
+            "href": "/api/v2/zones/115190/resourceRecords"
+        },
+        "up": {
+            "href": "/api/v2/zones/115190"
+        },
+        "moves": {
+            "href": "/api/v2/resourceRecords/115476/moves"
+        },
+        "tags": {
+            "href": "/api/v2/resourceRecords/115476/tags"
+        },
+        "accessRights": {
+            "href": "/api/v2/resourceRecords/115476/accessRights"
+        },
+        "transactions": {
+            "href": "/api/v2/resourceRecords/115476/transactions"
+        }
+    }
+}

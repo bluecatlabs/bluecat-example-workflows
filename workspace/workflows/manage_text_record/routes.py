@@ -149,6 +149,10 @@ def api_post_update_text_record():
         absolute_name = None
         headers = {"id": record_id}
 
+    if new_name is None:
+        headers['x-bcn-same-as-zone'] = True
+        #absolute_name = None
+
     body = {
         "id": record_id,
         "type": "TXTRecord",

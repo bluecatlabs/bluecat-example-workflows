@@ -55,7 +55,7 @@ const Content = () => {
         ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
-        recordName: validateNotEmpty('Record must have a name.')(recordName),
+        recordName: recordName,
         recordText: validateNotEmpty('Record must have text.')(recordText),
     });
 
@@ -91,6 +91,7 @@ const Content = () => {
                 oldText: values['record']['text'],
                 newText: values['recordText'],
             };
+            console.log(data)
             for (const key in data) {
                 payload.append(key, data[key]);
             }
