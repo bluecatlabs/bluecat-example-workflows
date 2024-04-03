@@ -19,6 +19,7 @@
 # SOFTWARE.
 """Routes and back-end implementation of workflow "update_text_record"."""
 import os
+import json
 
 # pylint: disable=import-error
 from bluecat.gateway.decorators import (
@@ -139,8 +140,16 @@ def api_post_update_text_record():
     zone_name = request.form["zoneName"]
     record_id = request.form["recordID"]
     old_name = request.form["oldName"]
-    new_name = request.form["newName"]
+    new_name = request.form["newName"]  # '' when nothing passed
     new_text = request.form["newText"]
+    '''
+    if new_name is None:
+        new_name = "textrecordnone"
+    elif new_name == '':
+        new_name = "textrecordblank"
+    elif new_name == 'null':
+        new_name = "textrecordstringnull"
+    '''
 
     headers = {}
     if old_name:
@@ -149,16 +158,16 @@ def api_post_update_text_record():
         absolute_name = None
         headers = {"id": record_id}
 
-    if new_name is None:
+    if not new_name:
         headers['x-bcn-same-as-zone'] = True
         #absolute_name = None
 
     body = {
-        "id": record_id,
-        "type": "TXTRecord",
-        "name": new_name if new_name else None,
-        "text": new_text if new_text else None,
-        "absoluteName": absolute_name,
+        'id': record_id,
+        'type': "TXTRecord",
+        'name': new_name if new_name else None,
+        'text': new_text if new_text else None,
+        'absoluteName': absolute_name,
     }
 
     try:
@@ -169,7 +178,7 @@ def api_post_update_text_record():
             json=body,
         )
     except Exception as e:
-        rdata = {"error": str(e)}
+        rdata = {"error": f"{str(e)} \n {json.dumps(body)}"}
         return {"error": rdata["error"]}
 
     return {

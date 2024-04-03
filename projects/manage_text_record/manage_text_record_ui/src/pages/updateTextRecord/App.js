@@ -55,7 +55,7 @@ const Content = () => {
         ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
-        recordName: recordName,
+        recordName: null,
         recordText: validateNotEmpty('Record must have text.')(recordText),
     });
 
@@ -80,14 +80,14 @@ const Content = () => {
     }, [triggerLoad]);
 
     const handleSubmit = (values) => {
-        if (values['recordName'] && values['recordText']) {
+        if (true) {
             const payload = new FormData();
             const data = {
                 zoneName: values['zone']['name'],
                 record: values['record'],
                 recordID: values['record']['id'],
                 oldName: values['record']['name'],
-                newName: values['recordName'],
+                newName: values['recordName'] ? values['recordName'] : null,
                 oldText: values['record']['text'],
                 newText: values['recordText'],
             };
@@ -98,6 +98,7 @@ const Content = () => {
             setBusy(true);
             doPost('/manage_text_record/update_text_record/update', payload)
                 .then((data) => {
+                    console.log(data)
                     addMessages([{ 'type': 'success', 'text': data.message }]);
                     toggleTriggerLoad();
                 })
