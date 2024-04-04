@@ -159,7 +159,7 @@ def api_post_update_text_record():
         headers = {"id": record_id}
 
     body = {
-        'id': record_id,
+        'id': int(record_id),
         'type': "TXTRecord",
     }
     if new_name:
@@ -187,13 +187,17 @@ def api_post_update_text_record():
             json=body,
         )
     except Exception as e:
-        rdata = {"error": f"{str(e)} \n\n {json.dumps(body)}"}
-        return {"error": rdata["error"]}
+        rdata = {"error": str(e)}
+        return {
+            "error": rdata["error"],
+            "response": rdata,  # debugging
+            "sent": body  # debugging
+        }
 
     return {
         "message": "Record successfully updated",
-        "data": rdata,
-        "sent": body
+        "data": rdata,  # debugging
+        "sent": body  # debugging
     }
 
 
