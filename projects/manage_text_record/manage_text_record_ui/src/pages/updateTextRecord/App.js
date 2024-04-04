@@ -87,7 +87,7 @@ const Content = () => {
                 record: values['record'],
                 recordID: values['record']['id'],
                 oldName: values['record']['name'],
-                newName: values['recordName'] ? values['recordName'] : null,
+                newName: values['recordName'],// ? values['recordName'] : null,
                 oldText: values['record']['text'],
                 newText: values['recordText'],
             };

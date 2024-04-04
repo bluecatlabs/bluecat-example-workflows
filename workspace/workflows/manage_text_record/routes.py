@@ -158,17 +158,26 @@ def api_post_update_text_record():
         absolute_name = None
         headers = {"id": record_id}
 
-    if not new_name:
+    body = {
+        'id': record_id,
+        'type': "TXTRecord",
+    }
+    if new_name:
+        body['name'] = new_name
+        body['absolute_name'] = absolute_name
+    else:
         headers['x-bcn-same-as-zone'] = True
         #absolute_name = None
+    if new_text:
+        body['text'] = new_text
 
-    body = {
+    '''body = {
         'id': record_id,
         'type': "TXTRecord",
         'name': new_name if new_name else None,
         'text': new_text if new_text else None,
         'absoluteName': absolute_name,
-    }
+    }'''
 
     try:
         rdata = g.user.bam_api.v2.http_put(
@@ -178,12 +187,13 @@ def api_post_update_text_record():
             json=body,
         )
     except Exception as e:
-        rdata = {"error": f"{str(e)} \n {json.dumps(body)}"}
+        rdata = {"error": f"{str(e)} \n\n {json.dumps(body)}"}
         return {"error": rdata["error"]}
 
     return {
         "message": "Record successfully updated",
         "data": rdata,
+        "sent": body
     }
 
 
