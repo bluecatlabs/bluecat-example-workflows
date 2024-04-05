@@ -139,45 +139,23 @@ def api_post_update_text_record():
 
     zone_name = request.form["zoneName"]
     record_id = request.form["recordID"]
-    old_name = request.form["oldName"]
-    new_name = request.form["newName"]  # '' when nothing passed
+    new_name = request.form["newName"]
     new_text = request.form["newText"]
-    '''
-    if new_name is None:
-        new_name = "textrecordnone"
-    elif new_name == '':
-        new_name = "textrecordblank"
-    elif new_name == 'null':
-        new_name = "textrecordstringnull"
-    '''
 
     headers = {}
-    if old_name:
-        absolute_name = old_name + "." + zone_name
+    if new_name:
+        absolute_name = new_name + "." + zone_name
     else:
         absolute_name = None
-        headers = {"id": record_id}
+        headers = {"x-bcn-same-as-zone": "true"}
 
     body = {
-        'id': int(record_id),
-        'type': "TXTRecord",
+        "id": record_id,
+        "type": "TXTRecord",
+        "name": new_name if new_name else None,
+        "text": new_text if new_text else None,
+        "absoluteName": absolute_name,
     }
-    if new_name:
-        body['name'] = new_name
-        body['absolute_name'] = absolute_name
-    else:
-        headers['x-bcn-same-as-zone'] = True
-        #absolute_name = None
-    if new_text:
-        body['text'] = new_text
-
-    '''body = {
-        'id': record_id,
-        'type': "TXTRecord",
-        'name': new_name if new_name else None,
-        'text': new_text if new_text else None,
-        'absoluteName': absolute_name,
-    }'''
 
     try:
         rdata = g.user.bam_api.v2.http_put(
@@ -188,16 +166,11 @@ def api_post_update_text_record():
         )
     except Exception as e:
         rdata = {"error": str(e)}
-        return {
-            "error": rdata["error"],
-            "response": rdata,  # debugging
-            "sent": body  # debugging
-        }
+        return {"error": rdata["error"]}
 
     return {
         "message": "Record successfully updated",
-        "data": rdata,  # debugging
-        "sent": body  # debugging
+        "data": rdata,
     }
 
 
