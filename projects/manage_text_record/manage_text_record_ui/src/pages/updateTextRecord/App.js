@@ -45,13 +45,14 @@ const Content = () => {
     const [triggerLoad, toggleTriggerLoad] = useTrigger();
     const [initialFormData, setInitialFormData] = useState(null);
     const rules = {};
-    const extraValidation = (errors, { configuration, view, zone }) => ({
+    const extraValidation = (errors, { configuration, view, zone, record }) => ({
         ...errors,
         configuration: validateNotEmpty('Please select a configuration.')(
             configuration?.name,
         ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
+        record: validateNotEmpty('Please select a record.')(record.name),
     });
 
     useEffect(() => {
@@ -122,7 +123,7 @@ const Content = () => {
                         initialValues={initialFormData}
                         extraValidation={extraValidation}
                         onSubmit={handleSubmit}
-                        className='UpdateTextRecord'>
+                        className='UpdateTextRecordForm'>
                         <FormFields initialFormData={initialFormData} />
                         <FormButtons saveButtonLabel='Update' />
                     </Form>
