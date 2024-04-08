@@ -45,18 +45,13 @@ const Content = () => {
     const [triggerLoad, toggleTriggerLoad] = useTrigger();
     const [initialFormData, setInitialFormData] = useState(null);
     const rules = {};
-    const extraValidation = (
-        errors,
-        { configuration, view, zone, recordName, recordText },
-    ) => ({
+    const extraValidation = (errors, { configuration, view, zone }) => ({
         ...errors,
         configuration: validateNotEmpty('Please select a configuration.')(
             configuration?.name,
         ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
-        recordName: null,
-        recordText: validateNotEmpty('Record must have text.')(recordText),
     });
 
     useEffect(() => {
@@ -80,43 +75,37 @@ const Content = () => {
     }, [triggerLoad]);
 
     const handleSubmit = (values) => {
-        if (true) {
-            const payload = new FormData();
-            const data = {
-                zoneName: values['zone']['name'],
-                record: values['record'],
-                recordID: values['record']['id'],
-                oldName: values['record']['name'],
-                newName: values['recordName'],// ? values['recordName'] : null,
-                oldText: values['record']['text'],
-                newText: values['recordText'],
-            };
-            console.log(data)
-            for (const key in data) {
-                payload.append(key, data[key]);
-            }
-            setBusy(true);
-            doPost('/manage_text_record/update_text_record/update', payload)
-                .then((data) => {
-                    console.log(data)
-                    addMessages([{ 'type': 'success', 'text': data.message }]);
-                    toggleTriggerLoad();
-                })
-                .catch((error) => {
-                    const { page: pageErrors } = processErrorMessages(
-                        error,
-                        {},
-                        true,
-                    );
-                    addMessages(
-                        pageErrors.map((text) => ({
-                            'type': 'error',
-                            'text': text,
-                        })),
-                    );
-                })
-                .finally(() => setBusy(false));
+        const payload = new FormData();
+        const data = {
+            zoneName: values['zone']['name'],
+            record: values['record'],
+            recordID: values['record']['id'],
+            newName: values['recordName'],
+            newText: values['recordText'],
+        };
+        for (const key in data) {
+            payload.append(key, data[key]);
         }
+        setBusy(true);
+        doPost('/manage_text_record/update_text_record/update', payload)
+            .then((data) => {
+                addMessages([{ 'type': 'success', 'text': data.message }]);
+                toggleTriggerLoad();
+            })
+            .catch((error) => {
+                const { page: pageErrors } = processErrorMessages(
+                    error,
+                    {},
+                    true,
+                );
+                addMessages(
+                    pageErrors.map((text) => ({
+                        'type': 'error',
+                        'text': text,
+                    })),
+                );
+            })
+            .finally(() => setBusy(false));
     };
 
     return (

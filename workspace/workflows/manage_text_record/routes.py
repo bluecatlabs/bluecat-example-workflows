@@ -19,7 +19,6 @@
 # SOFTWARE.
 """Routes and back-end implementation of workflow "update_text_record"."""
 import os
-import json
 
 # pylint: disable=import-error
 from bluecat.gateway.decorators import (
