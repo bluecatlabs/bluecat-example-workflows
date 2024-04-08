@@ -45,7 +45,10 @@ const Content = () => {
     const [triggerLoad, toggleTriggerLoad] = useTrigger();
     const [initialFormData, setInitialFormData] = useState(null);
     const rules = {};
-    const extraValidation = (errors, { configuration, view, zone, record }) => ({
+    const extraValidation = (
+        errors,
+        { configuration, view, zone, record },
+    ) => ({
         ...errors,
         configuration: validateNotEmpty('Please select a configuration.')(
             configuration?.name,
