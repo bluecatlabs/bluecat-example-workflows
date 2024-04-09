@@ -55,7 +55,7 @@ const Content = () => {
         ),
         view: validateNotEmpty('Please select a view.')(view?.name),
         zone: validateNotEmpty('Please select a zone.')(zone?.name),
-        record: validateNotEmpty('Please select a record.')(record.name),
+        record: validateNotEmpty('Please select a record.')(record.displayName),
     });
 
     useEffect(() => {
@@ -93,6 +93,10 @@ const Content = () => {
         setBusy(true);
         doPost('/manage_text_record/update_text_record/update', payload)
             .then((data) => {
+                const keys = Object.keys(data)
+                if(keys.length === 1 && keys[0] === 'error'){
+                    throw new Error(data[keys[0]])
+                }
                 addMessages([{ 'type': 'success', 'text': data.message }]);
                 toggleTriggerLoad();
             })
