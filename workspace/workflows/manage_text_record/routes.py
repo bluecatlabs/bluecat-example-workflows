@@ -159,7 +159,7 @@ def api_post_update_text_record():
     }
 
     try:
-        g.user.bam_api.v2.http_put(
+        rdata = g.user.bam_api.v2.http_put(
             f"/resourceRecords/{record_id}",
             headers=headers,
             params={},
@@ -170,6 +170,7 @@ def api_post_update_text_record():
 
     return {
         "message": "Record successfully updated",
+        "data": rdata,
     }
 
 
