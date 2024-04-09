@@ -93,10 +93,11 @@ const Content = () => {
         setBusy(true);
         doPost('/manage_text_record/update_text_record/update', payload)
             .then((data) => {
+                /*
                 const keys = Object.keys(data)
-                if(keys.length === 1 && keys[0] === 'error'){
+                if(keys.length === 1 && keys[0] === 'error')
                     throw new Error(data[keys[0]])
-                }
+                */
                 addMessages([{ 'type': 'success', 'text': data.message }]);
                 toggleTriggerLoad();
             })
