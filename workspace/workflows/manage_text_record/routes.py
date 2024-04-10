@@ -120,7 +120,7 @@ def utr_get_records():
         f"/zones/{zone_id}/resourceRecords",
         params={
             "fields": "id,name,text",
-            "filter":"type:eq('TXTRecord')",
+            "filter": "type:eq('TXTRecord')",
             "orderBy": "desc(name)",
             "limit": "9999",
         },
@@ -258,7 +258,7 @@ def dtr_get_records():
         f"/zones/{zone_id}/resourceRecords",
         params={
             "fields": "id,name,text",
-            "filter":"type:eq('TXTRecord')",
+            "filter": "type:eq('TXTRecord')",
             "orderBy": "desc(name)",
             "limit": "9999",
         },
