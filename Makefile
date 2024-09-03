@@ -36,7 +36,7 @@ run: run-prep
 		-v "$(BASE_DIR)/logs":/logs \
 	 	-u "$(shell id -u)" \
 		--name example-workflows \
-		quay.io/bluecat/gateway:24.1.0
+		quay.io/bluecat/gateway:24.3.1
 
 stop:
 	docker stop example-workflows
@@ -55,7 +55,7 @@ ui-build:
 
 
 image-build:
-	docker build --tag quay.io/bluecat/gateway_example_workflows_ci:24.1.0 .
+	docker build --tag quay.io/bluecat/gateway_example_workflows_ci:24.3.1 .
 
 build: ui-build image-build
 
